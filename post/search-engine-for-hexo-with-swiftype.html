@@ -1,0 +1,450 @@
+
+ <!DOCTYPE HTML>
+<html lang="zh-CN">
+<head>
+<meta name="baidu-site-verification" content="23nZ3fPmW8" />
+  <meta charset="UTF-8">
+  
+    <title>利用swiftype为hexo添加站内搜索 | JerryFu&#39;s Blog</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=3, minimum-scale=1">
+    
+    <meta name="author" content="jrhu05">
+    
+    <meta name="description" content="这是针对老版本的swiftype的教程，新版本教程请戳这里：利用swiftype为hexo添加站内搜索v2.0
+　　如何为hexo这样的静态博客添加搜索功能，一直是一个比较头疼的事情，我在网上找了许多的方法都不是很满意。
+　　网上使用hexo搭博客的筒子们大多数是采用谷歌（被墙2333）或者百度的站">
+    
+    
+    
+    <meta name="twitter:card" content="summary" />
+    <meta name="twitter:site" content="jrhu05" />
+    <meta name="twitter:title" content="利用swiftype为hexo添加站内搜索 | JerryFu&#39;s Blog" />
+      
+    
+    
+    <link rel="alternate" href="http://www.jerryfu.net/atom.xml" title="JerryFu&#39;s Blog" type="application/atom+xml">
+    
+    
+    <link rel="icon" href="/img/favicon.ico">
+    
+    
+    <link rel="apple-touch-icon" href="/img/pacman.jpg">
+    <link rel="apple-touch-icon-precomposed" href="/img/pacman.jpg">
+    
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+
+  <body>
+    <header>
+      <div>
+		
+			<div id="imglogo">
+				<a href="/"><img src="/img/logo.png" alt="JerryFu&#39;s Blog" title="JerryFu&#39;s Blog"/></a>
+			</div>
+			
+			<div id="textlogo">
+				<h1 class="site-name"><a href="/" title="JerryFu&#39;s Blog">JerryFu&#39;s Blog</a></h1>
+				<h2 class="blog-motto">let us do sth interesting!</h2>
+			</div>
+			<div class="navbar"><a class="navbutton navmobile" href="#" title="菜单">
+			</a></div>
+			<nav class="animated">
+				<ul>
+					
+						<li><a href="/">Home</a></li>
+					
+						<li><a href="/about">About</a></li>
+					
+						<li><a href="/contact-me">Contact Me</a></li>
+					
+						<li><a href="/archives">Archives</a></li>
+					
+					<li>
+					
+						<form class="search" action="/search/index.html" method="get" accept-charset="utf-8">
+						<label>Search</label>
+						<input type="text" id="st-search-inpu" maxlength="20" placeholder="Search" />
+						</form>
+						
+					
+					</li>
+				</ul>
+			</nav>			
+</div>
+
+    </header>
+    <div id="container">
+      <div id="main" class="post" itemscope itemprop="blogPost">
+	<article itemprop="articleBody"> 
+		<header class="article-info clearfix">
+  <h1 itemprop="name">
+    
+      <a href="/post/search-engine-for-hexo-with-swiftype.html" title="利用swiftype为hexo添加站内搜索" itemprop="url">利用swiftype为hexo添加站内搜索</a>
+  </h1>
+  <p class="article-author">By
+    
+      <a href="https://plus.google.com/116290701921732560000?rel=author" title="jrhu05" target="_blank" itemprop="author">jrhu05</a>
+    </p>
+  <p class="article-time">
+    <time datetime="2015-01-17T10:15:28.000Z" itemprop="datePublished">Jan 17 2015</time>
+    更新日期:<time datetime="2016-02-10T08:40:30.000Z" itemprop="dateModified">Feb 10 2016</time>
+    
+  </p>
+</header>
+	<div class="article-content">
+		
+		
+		<div id="toc" class="toc-article">
+			<strong class="toc-title">文章目录</strong>
+		
+		</div>
+		
+		<p>　　这是针对老版本的swiftype的教程，新版本教程请戳这里：<a href="http://www.jerryfu.net/post/search-engine-for-hexo-with-swiftype-v2.html" title="利用swiftype为hexo添加站内搜索v2.0" target="_blank" rel="external">利用swiftype为hexo添加站内搜索v2.0</a></p>
+<p>　　如何为hexo这样的静态博客添加搜索功能，一直是一个比较头疼的事情，我在网上找了许多的方法都不是很满意。</p>
+<p>　　网上使用hexo搭博客的筒子们大多数是采用谷歌（被墙2333）或者百度的站内搜索服务，或者直接没弄，点搜索直接404。</p>
+<p>　　使用百度的站内搜索个人感觉很不爽，虽然操作起来很简单，但是效果太差，别人一看就能发现是调用百度的数据。</p>
+<p>　　不过由于很简单所以有兴趣的可以看一下coney的实现效果：</p>
+<p>　　coney的百度站内搜索演示：<a href="http://search.gengbiao.me/cse/search?s=2049782880735612718&amp;q=" target="_blank" rel="external">演示</a></p>
+<p>　　具体的实现方法戳这里：<br>　　<a href="http://gengbiao.me/2014/10/22/hexo%E6%B7%BB%E5%8A%A0%E7%99%BE%E5%BA%A6%E7%AB%99%E5%86%85%E6%90%9C%E7%B4%A2/#" target="_blank" rel="external">实现</a></p>
+<p>　　Coney在基础的百度站内搜索展示界面的基础上做了一些样式的修改，使得看起来稍微像那么一点自己的搜索，不过缺点就是点击搜索页面的导航栏的各个链接，比如“首页”等都无法进行跳转，而且这种搜索方式你提交的sitemap链接需要被百度站内搜索收录才能在搜索结果中显示出来。</p>
+<p>　　后来在rimo的博文中了解到可以使用swiftype来实现hexo等静态博客的站内搜索，参见：<br><a href="http://blog.moyizhou.cn/web/search-engine-for-static-pages/#swiftype" target="_blank" rel="external">静态博客如何实现站内搜索</a>。Rimo的博客完美了实现了hexo的搜索功能，但是他提供的是对应于hexo下的chenall主题的搜索功能实现代码。Pacman的主题并不使用，于是我便开始了自己的探索，倒腾半天终于实现了与之类似的搜索功能。</p>
+<p>　　先放一下演示：<a href="http://www.jerryfu.net/search/index.html#stq=sokoban&amp;stp=1" target="_blank" rel="external">swiftype搜索演示</a></p>
+<p>　　顺利的搜索出了结果。</p>
+<p>　　下面给出实现步骤。</p>
+<p>　　首先你要去swiftype的网站<a href="https://swiftype.com" target="_blank" rel="external">https://swiftype.com</a>注册一个账号，然后根据指引建立好自己网站对应的索引，不得不说swiftype很棒，只要输入一个网址它便会自动的抓取这个站点的所有页面，并自动添加关键字。</p>
+<p>　　然后切换到install面板，如下图：</p>
+<p><img src="/img/search-engine-for-hexo-with-swiftype/1.jpg" alt=""></p>
+<p>　　进入安装面板后需要先配置一下自己的站点，按照下图的配置来操作：</p>
+<p><img src="/img/search-engine-for-hexo-with-swiftype/2.jpg" alt=""></p>
+<p>　　其中的网址注意把www.jerryfu.net部分替换成自己的网址。</p>
+<p>　　然后点击配置界面左侧的“SWIFTYPE INSTALL CODE”来获取所需要的js代码，获取的代码如下：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">&lt;script type=&quot;text/javascript&quot;&gt;</span><br><span class="line">  (function(w,d,t,u,n,s,e)&#123;w[&apos;SwiftypeObject&apos;]=n;w[n]=w[n]||function()&#123;</span><br><span class="line">  (w[n].q=w[n].q||[]).push(arguments);&#125;;s=d.createElement(t);</span><br><span class="line">  e=d.getElementsByTagName(t)[0];s.async=1;s.src=u;e.parentNode.insertBefore(s,e);</span><br><span class="line">  &#125;)(window,document,&apos;script&apos;,&apos;//s.swiftypecdn.com/install/v1/st.js&apos;,&apos;_st&apos;);</span><br><span class="line"></span><br><span class="line">  _st(&apos;install&apos;,&apos;auhSjJgvzA1Ct722dXyr&apos;); //其实每个人不同的也就是这个userID</span><br><span class="line">&lt;/script&gt;</span><br></pre></td></tr></table></figure></p>
+<p>　　将这段代码先copy一下，最后配置部分要用到。</p>
+<p>　　至此swiftype网站部分的配置结束，下面要对本地的Pacman主题进行一些简单的配置就可以了。</p>
+<p>　　首先打开pacman主题下的_config.yml文件在末尾添加如下代码：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">swift_search:</span><br><span class="line">  enable: true</span><br></pre></td></tr></table></figure></p>
+<p><img src="/img/search-engine-for-hexo-with-swiftype/3.jpg" alt=""></p>
+<p>　<br>　　我这是填了一个swift_search的功能，你们也可以直接改掉自带的google search。</p>
+<p>　　然后到hexo的source目录（注意不是pacman主题的source目录）下建立一个search文件夹，再在其下建立一个index.md，index.md中写入如下代码：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">layout: search</span><br><span class="line">title: search</span><br><span class="line">----</span><br></pre></td></tr></table></figure></p>
+<p><img src="/img/search-engine-for-hexo-with-swiftype/4.jpg" alt=""></p>
+<p>　　然后再切换的到pacman\layout_partial目录下，最后需要做的收尾工作全部都在这个目录下。<br>先打开header.ejs，在<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&lt;% if	(theme.google_cse&amp;&amp;theme.google_cse.enable)&#123; %&gt;</span><br><span class="line">					&lt;form class=&quot;search&quot; action=&quot;&lt;%- config.root %&gt;search/index.html&quot; method=&quot;get&quot; accept-charset=&quot;utf-8&quot;&gt;</span><br><span class="line">						&lt;label&gt;Search&lt;/label&gt;</span><br><span class="line">						&lt;input type=&quot;text&quot; id=&quot;search&quot; autocomplete=&quot;off&quot; name=&quot;q&quot; maxlength=&quot;20&quot; placeholder=&quot;&lt;%= __(&apos;search&apos;) %&gt;&quot; /&gt;</span><br><span class="line">					&lt;/form&gt;</span><br></pre></td></tr></table></figure></p>
+<p>和</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">&lt;% &#125; else &#123; %&gt;  //注意这个else前面有一个&#125;是我后加的，为了和后加的代码完成闭包</span><br><span class="line">					&lt;form class=&quot;search&quot; action=&quot;//baidu.com/search&quot; method=&quot;get&quot; accept-charset=&quot;utf-8&quot;&gt;</span><br><span class="line">						&lt;label&gt;Search&lt;/label&gt;</span><br><span class="line">						&lt;input type=&quot;text&quot; id=&quot;search&quot; name=&quot;q&quot; autocomplete=&quot;off&quot; maxlength=&quot;20&quot; placeholder=&quot;&lt;%= __(&apos;search&apos;) %&gt;&quot; /&gt;</span><br><span class="line">						&lt;input type=&quot;hidden&quot; name=&quot;q&quot; value=&quot;site:&lt;%- config.url.replace(/^https?:\/\//, &apos;&apos;) %&gt;&quot;&gt;</span><br><span class="line">					&lt;/form&gt;</span><br><span class="line">					&lt;% &#125; %&gt;</span><br></pre></td></tr></table></figure>
+<p>　　之间添加如下一段代码：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&lt;% &#125;else if	(theme.swift_search&amp;&amp;theme.swift_search.enable)&#123; %&gt;</span><br><span class="line">						&lt;form class=&quot;search&quot; action=&quot;&lt;%- config.root %&gt;search/index.html&quot; method=&quot;get&quot; accept-charset=&quot;utf-8&quot;&gt;</span><br><span class="line">						&lt;label&gt;Search&lt;/label&gt;</span><br><span class="line">						&lt;input type=&quot;text&quot; id=&quot;st-search-inpu&quot; maxlength=&quot;20&quot; placeholder=&quot;Search&quot; /&gt;</span><br><span class="line">						&lt;/form&gt;</span><br></pre></td></tr></table></figure>
+<p>　　如下所示：</p>
+<p><img src="/img/search-engine-for-hexo-with-swiftype/5.jpg" alt=""></p>
+<p>　　Header.ejs的处理完成。</p>
+<p>　　接下来处理search.ejs。</p>
+<p>　　将原来的search.ejs中的代码清空，替换为如下的代码：</p>
+<p>　　其实主要就是为了控制结果的显示样式。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br></pre></td><td class="code"><pre><span class="line">&lt;% if(theme.swift_search.enable) &#123; %&gt;</span><br><span class="line">&lt;div  id=&quot;container&quot; class=&quot;page&quot;&gt;</span><br><span class="line">  &lt;div id=&quot;st-results-container&quot; style=&quot;width:80%&quot;&gt;正在加载搜索结果，请稍等。&lt;/div&gt;</span><br><span class="line">  &lt;style&gt;.st-result-text &#123;</span><br><span class="line">  background: #fafafa;</span><br><span class="line">  display: block;</span><br><span class="line">  border-left: 0.5em solid #ccc;</span><br><span class="line">  -webkit-transition: border-left 0.45s;</span><br><span class="line">  -moz-transition: border-left 0.45s;</span><br><span class="line">  -o-transition: border-left 0.45s;</span><br><span class="line">  -ms-transition: border-left 0.45s;</span><br><span class="line">  transition: border-left 0.45s;</span><br><span class="line">  padding: 0.5em;</span><br><span class="line">&#125;</span><br><span class="line">@media only screen and (min-width: 768px) &#123;</span><br><span class="line">  .st-result-text &#123;</span><br><span class="line">    padding: 1em;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line">.st-result-text:hover &#123;</span><br><span class="line">  border-left: 0.5em solid #ea6753;</span><br><span class="line">&#125;</span><br><span class="line">.st-result-text h3 a&#123;</span><br><span class="line">  color: #2ca6cb;</span><br><span class="line">  line-height: 1.5;</span><br><span class="line">  font-size: 22px;</span><br><span class="line">&#125;</span><br><span class="line">.st-snippet em &#123;</span><br><span class="line">  font-weight: bold;</span><br><span class="line">  color: #ea6753;</span><br><span class="line">&#125;&lt;/style&gt;</span><br><span class="line"></span><br><span class="line">&lt;script type=&quot;text/javascript&quot;&gt;</span><br><span class="line">  (function(w,d,t,u,n,s,e)&#123;w[&apos;SwiftypeObject&apos;]=n;w[n]=w[n]||function()&#123;</span><br><span class="line">  (w[n].q=w[n].q||[]).push(arguments);&#125;;s=d.createElement(t);</span><br><span class="line">  e=d.getElementsByTagName(t)[0];s.async=1;s.src=u;e.parentNode.insertBefore(s,e);</span><br><span class="line">  &#125;)(window,document,&apos;script&apos;,&apos;//s.swiftypecdn.com/install/v1/st.js&apos;,&apos;_st&apos;);</span><br><span class="line"></span><br><span class="line">  _st(&apos;install&apos;,&apos;auhSjJgvzA1Ct722dXyr&apos;);</span><br><span class="line">&lt;/script&gt;</span><br><span class="line"></span><br><span class="line">&lt;% &#125; %&gt;</span><br></pre></td></tr></table></figure></p>
+<p>　　最后打开footer.ejs（其实header也行，随便你），在最后一个标签之前添加一开始拷贝的那段js代码，我的是：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">		&lt;script type=&quot;text/javascript&quot;&gt;</span><br><span class="line">  (function(w,d,t,u,n,s,e)&#123;w[&apos;SwiftypeObject&apos;]=n;w[n]=w[n]||function()&#123;</span><br><span class="line">  (w[n].q=w[n].q||[]).push(arguments);&#125;;s=d.createElement(t);</span><br><span class="line">  e=d.getElementsByTagName(t)[0];s.async=1;s.src=u;e.parentNode.insertBefore(s,e);</span><br><span class="line">  &#125;)(window,document,&apos;script&apos;,&apos;//s.swiftypecdn.com/install/v1/st.js&apos;,&apos;_st&apos;);</span><br><span class="line"></span><br><span class="line">  _st(&apos;install&apos;,&apos;auhSjJgvzA1Ct722dXyr&apos;);</span><br><span class="line">&lt;/script&gt;</span><br></pre></td></tr></table></figure></p>
+<p>　　如下图所示：</p>
+<p><img src="/img/search-engine-for-hexo-with-swiftype/6.jpg" alt=""></p>
+<p>　　至此所有的操作均已经完成。</p>
+<p>　　最后你要做的只需hexo g&amp;&amp;hexo d，重新部署一下hexo即可。</p>
+<p>　　Enjoying it!</p>
+<p>　　转载的话请注明出处，给咱新开的小博客添点人气，谢谢！</p>
+  
+	</div>
+		<footer class="article-footer clearfix">
+
+  <div class="article-tags">
+  
+  <span></span> <a href="/tags/hexo搜索/">hexo搜索</a><a href="/tags/swiftype/">swiftype</a>
+  </div>
+
+
+<div class="article-categories">
+  <span></span>
+  <a class="article-category-link" href="/categories/研究僧呀/">研究僧呀</a>
+</div>
+
+
+
+<div class="article-share" id="share">
+
+  
+<div class="jiathis_style">
+    <span class="jiathis_txt">分享到：</span>
+    <a class="jiathis_button_tsina">新浪微博</a>
+    <a class="jiathis_button_weixin">微信</a>
+    <a class="jiathis_button_twitter">Twitter</a>
+    <a class="jiathis_button_evernote">EverNote</a>
+    <a href="http://www.jiathis.com/share?uid=1501277" class="jiathis jiathis_txt jiathis_separator jtico jtico_jiathis" target="_blank">更多</a>
+</div>
+<script type="text/javascript" >
+    var jiathis_config={
+    data_track_clickback:true,
+    sm:"copy,renren,cqq",
+    pic:"",
+    summary:"",
+     ralateuid:{"tsina":"3114414043"},hideMore:false}
+    
+  </script> 
+<script type="text/javascript" src="//v3.jiathis.com/code/jia.js?uid=
+2002002" charset="utf-8"></script>      
+
+
+</div>
+</footer>   	       
+	</article>
+	
+<nav class="article-nav clearfix">
+ 
+ <div class="prev" >
+ <a href="/post/android-contact.html" title="安卓手机通讯录">
+  <strong>PREVIOUS:</strong><br/>
+  <span>
+  安卓手机通讯录</span>
+</a>
+</div>
+
+
+<div class="next">
+<a href="/post/school-manage-system.html"  title="学校信息管理系统">
+ <strong>NEXT:</strong><br/> 
+ <span>学校信息管理系统
+</span>
+</a>
+</div>
+
+</nav>
+
+	
+<!-- 多说评论框 start -->
+	<div class="ds-thread" data-thread-key="post/search-engine-for-hexo-with-swiftype.html" data-title="利用swiftype为hexo添加站内搜索" data-url="http://jrhu05.github.io/post/search-engine-for-hexo-with-swiftype.html"></div>
+<!-- 多说评论框 end -->
+<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
+<script type="text/javascript">
+var duoshuoQuery = {short_name:"jrhu05"};
+	(function() {
+		var ds = document.createElement('script');
+		ds.type = 'text/javascript';ds.async = true;
+		ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+		ds.charset = 'UTF-8';
+		(document.getElementsByTagName('head')[0] 
+		 || document.getElementsByTagName('body')[0]).appendChild(ds);
+	})();
+	</script>
+<!-- 多说公共JS代码 end -->
+
+
+</div>  
+      <div class="openaside"><a class="navbutton" href="#" title="显示侧边栏"></a></div>
+
+  <div id="toc" class="toc-aside">
+  <strong class="toc-title">文章目录</strong>
+  
+  </div>
+
+<div id="asidepart">
+<div class="closeaside"><a class="closebutton" href="#" title="隐藏侧边栏"></a></div>
+<aside class="clearfix">
+
+  
+<div class="categorieslist">
+	<p class="asidetitle">分类</p>
+		<ul>
+		
+			<li><a href="/categories/本科阶段/" title="本科阶段">本科阶段<sup>4</sup></a></li>
+		
+			<li><a href="/categories/琐事物语/" title="琐事物语">琐事物语<sup>12</sup></a></li>
+		
+			<li><a href="/categories/研究僧呀/" title="研究僧呀">研究僧呀<sup>13</sup></a></li>
+		
+			<li><a href="/categories/算法寻径/" title="算法寻径">算法寻径<sup>8</sup></a></li>
+		
+			<li><a href="/categories/网络安全/" title="网络安全">网络安全<sup>4</sup></a></li>
+		
+		</ul>
+</div>
+
+
+  
+  <div class="tagcloudlist">
+    <p class="asidetitle">标签云</p>
+    <div class="tagcloudlist clearfix">
+       <a href="/tags/BSC模拟器/" style="font-size: 10px;">BSC模拟器</a> <a href="/tags/Bezier曲线段的拼接/" style="font-size: 10px;">Bezier曲线段的拼接</a> <a href="/tags/Hamming模拟器/" style="font-size: 10px;">Hamming模拟器</a> <a href="/tags/LCS问题/" style="font-size: 10px;">LCS问题</a> <a href="/tags/Social-Engineering/" style="font-size: 10px;">Social Engineering</a> <a href="/tags/awt/" style="font-size: 15px;">awt</a> <a href="/tags/crc/" style="font-size: 10px;">crc</a> <a href="/tags/hexo搜索/" style="font-size: 15px;">hexo搜索</a> <a href="/tags/java/" style="font-size: 20px;">java</a> <a href="/tags/pathfinding/" style="font-size: 10px;">pathfinding</a> <a href="/tags/rho/" style="font-size: 10px;">rho</a> <a href="/tags/swiftype/" style="font-size: 15px;">swiftype</a> <a href="/tags/swing/" style="font-size: 10px;">swing</a> <a href="/tags/七牛云/" style="font-size: 10px;">七牛云</a> <a href="/tags/乐享/" style="font-size: 10px;">乐享</a> <a href="/tags/使用帮助/" style="font-size: 10px;">使用帮助</a> <a href="/tags/信息论/" style="font-size: 15px;">信息论</a> <a href="/tags/关于爱情/" style="font-size: 10px;">关于爱情</a> <a href="/tags/动态规划/" style="font-size: 10px;">动态规划</a> <a href="/tags/华为实习生/" style="font-size: 10px;">华为实习生</a> <a href="/tags/合数分解/" style="font-size: 10px;">合数分解</a> <a href="/tags/回朔法/" style="font-size: 10px;">回朔法</a> <a href="/tags/域名申诉/" style="font-size: 10px;">域名申诉</a> <a href="/tags/大数/" style="font-size: 10px;">大数</a> <a href="/tags/天才病/" style="font-size: 10px;">天才病</a> <a href="/tags/安全感/" style="font-size: 10px;">安全感</a> <a href="/tags/安卓/" style="font-size: 10px;">安卓</a> <a href="/tags/归并排序/" style="font-size: 10px;">归并排序</a> <a href="/tags/快速排序/" style="font-size: 10px;">快速排序</a> <a href="/tags/总结/" style="font-size: 10px;">总结</a> <a href="/tags/手机通讯录/" style="font-size: 10px;">手机通讯录</a> <a href="/tags/插入排序/" style="font-size: 10px;">插入排序</a> <a href="/tags/方正教务系统0day漏洞/" style="font-size: 10px;">方正教务系统0day漏洞</a> <a href="/tags/无线信息化改造/" style="font-size: 10px;">无线信息化改造</a> <a href="/tags/最近点对/" style="font-size: 10px;">最近点对</a> <a href="/tags/朋友/" style="font-size: 10px;">朋友</a> <a href="/tags/模2除法/" style="font-size: 10px;">模2除法</a> <a href="/tags/模拟游戏下载/" style="font-size: 10px;">模拟游戏下载</a> <a href="/tags/渗透/" style="font-size: 10px;">渗透</a> <a href="/tags/游记/" style="font-size: 15px;">游记</a> <a href="/tags/电信客户端破解/" style="font-size: 15px;">电信客户端破解</a> <a href="/tags/矩阵区分-算法-worksapplication机试/" style="font-size: 10px;">矩阵区分,算法,worksapplication机试</a> <a href="/tags/秒速5厘米/" style="font-size: 10px;">秒速5厘米</a> <a href="/tags/老师/" style="font-size: 10px;">老师</a> <a href="/tags/花钱/" style="font-size: 10px;">花钱</a> <a href="/tags/计算机图形学/" style="font-size: 10px;">计算机图形学</a> <a href="/tags/贪心算法/" style="font-size: 10px;">贪心算法</a> <a href="/tags/连连看/" style="font-size: 10px;">连连看</a> <a href="/tags/随机算法/" style="font-size: 10px;">随机算法</a>
+    </div>
+  </div>
+
+
+  <div class="linkslist">
+  <p class="asidetitle">友情链接</p>
+    <ul>	
+      <li><a href="http://www.hytcshare.com" target="_blank" title="淮师乐享">Hytcshare</a></li>
+      <li><a href="https://blog.dimension.moe" target="_blank" title="萌萌的学弟">dimension</a></li>
+      <li><a href="http://dtysky.moe" target="_blank" title="少女心的大叔">dtysky</a></li>
+      <li><a href="http://hexo.io" target="_blank" title="Hexo">Hexo</a></li>
+    </ul>
+</div>
+
+
+  <div class="rsspart">
+	<a href="http://www.jerryfu.net/atom.xml" target="_blank" title="rss">RSS 订阅</a>
+</div>
+
+</aside>
+</div>
+    </div>
+    <footer><div id="footer" >
+	
+	<div class="line">
+		<span></span>
+		<div class="author"></div>
+	</div>
+	
+	
+	<section class="info">
+		<p> Hello, I am JerryFu, now I am a postgraduate student in SEU. <br/>
+			I am interested in network security, and I hope my blog will give you sth interesting or useful.</p>
+	</section>
+	 
+	<div class="social-font clearfix">
+		
+		<a href="http://weibo.com/3114414043" target="_blank" title="weibo"></a>
+		
+		
+		<a href="https://twitter.com/jrhu05" target="_blank" title="twitter"></a>
+		
+		
+		<a href="https://gitcafe.com/jrhu05" target="_blank" title="github"></a>
+		
+		
+		<a href="https://www.facebook.com/jrhu05" target="_blank" title="facebook"></a>
+		
+		
+	</div>
+		<p class="copyright">Powered by <a href="http://hexo.io" target="_blank" title="hexo">hexo</a>, Deploy on <a href="https://github.com" target="_blank" title="github">github</a>, <a href="https://coding.net/" target="_blank" title="coding">coding</a> and Theme by <a href="https://github.com/A-limon/pacman" target="_blank" title="Pacman">Pacman</a> © 2016 
+		
+		<a href="http://jrhu05.github.io" target="_blank" title="jrhu05">jrhu05</a>
+		
+		<script type="text/javascript">var cnzz_protocol = (("https:" == document.location.protocol) ? " https://" : " http://");document.write(unescape("%3Cspan id='cnzz_stat_icon_3067169'%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "s5.cnzz.com/stat.php%3Fid%3D3067169%26show%3Dpic' type='text/javascript'%3E%3C/script%3E"));</script>
+		</p>
+		
+		<script type="text/javascript">
+  (function(w,d,t,u,n,s,e){w['SwiftypeObject']=n;w[n]=w[n]||function(){
+  (w[n].q=w[n].q||[]).push(arguments);};s=d.createElement(t);
+  e=d.getElementsByTagName(t)[0];s.async=1;s.src=u;e.parentNode.insertBefore(s,e);
+  })(window,document,'script','//s.swiftypecdn.com/install/v1/st.js','_st');
+
+  _st('install','auhSjJgvzA1Ct722dXyr');
+</script>
+
+</div>
+</footer>
+    <!-- mathjax config similar to math.stackexchange -->
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+      processEscapes: true
+    }
+  });
+</script>
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+      tex2jax: {
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+      }
+    });
+</script>
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for(i=0; i < all.length; i += 1) {
+            all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+    });
+</script>
+<!-- http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML -->
+<!-- http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=default -->
+<script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=default">
+</script>
+<script src="/js/jquery-2.1.0.min.js"></script>
+<script type="text/javascript">
+$(document).ready(function(){ 
+  $('.navbar').click(function(){
+    $('header nav').toggleClass('shownav');
+  });
+  var myWidth = 0;
+  function getSize(){
+    if( typeof( window.innerWidth ) == 'number' ) {
+      myWidth = window.innerWidth;
+    } else if( document.documentElement && document.documentElement.clientWidth) {
+      myWidth = document.documentElement.clientWidth;
+    };
+  };
+  var m = $('#main'),
+      a = $('#asidepart'),
+      c = $('.closeaside'),
+      o = $('.openaside');
+  $(window).resize(function(){
+    getSize(); 
+    if (myWidth >= 1024) {
+      $('header nav').removeClass('shownav');
+    }else
+    {
+      m.removeClass('moveMain');
+      a.css('display', 'block').removeClass('fadeOut');
+      o.css('display', 'none');
+      
+      $('#toc.toc-aside').css('display', 'none');
+        
+    }
+  });
+  c.click(function(){
+    a.addClass('fadeOut').css('display', 'none');
+    o.css('display', 'block').addClass('fadeIn');
+    m.addClass('moveMain');
+  });
+  o.click(function(){
+    o.css('display', 'none').removeClass('beforeFadeIn');
+    a.css('display', 'block').removeClass('fadeOut').addClass('fadeIn');      
+    m.removeClass('moveMain');
+  });
+  $(window).scroll(function(){
+    o.css("top",Math.max(80,260-$(this).scrollTop()));
+  });
+});
+</script>
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var ai = $('.article-content>iframe'),
+      ae = $('.article-content>embed'),
+      t  = $('#toc'),
+      h  = $('article h2')
+      ah = $('article h2'),
+      ta = $('#toc.toc-aside'),
+      o  = $('.openaside'),
+      c  = $('.closeaside');
+  if(ai.length>0){
+    ai.wrap('<div class="video-container" />');
+  };
+  if(ae.length>0){
+   ae.wrap('<div class="video-container" />');
+  };
+  if(ah.length==0){
+    t.css('display','none');
+  }else{
+    c.click(function(){
+      ta.css('display', 'block').addClass('fadeIn');
+    });
+    o.click(function(){
+      ta.css('display', 'none');
+    });
+    $(window).scroll(function(){
+      ta.css("top",Math.max(140,320-$(this).scrollTop()));
+    });
+  };
+});
+</script>
+
+
+
+
+
+
+
+  </body>
+</html>

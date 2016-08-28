@@ -1,0 +1,525 @@
+
+ <!DOCTYPE HTML>
+<html lang="zh-CN">
+<head>
+<meta name="baidu-site-verification" content="23nZ3fPmW8" />
+  <meta charset="UTF-8">
+  
+    <title>对本校校园网的一次友情检测 | JerryFu&#39;s Blog</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=3, minimum-scale=1">
+    
+    <meta name="author" content="jrhu05">
+    
+    <meta name="description" content="学校网站的安全性很差，这是我初步看过学校网站后的结论。
+学校的网站除了主页及少数几个下属分站是定制的系统外，其余全部的子网站全部是对已有的网站系统加以改进后而来的，因此便有了后话。建站工作量巨大，对于对安全系数要求不高的网站来说使用现成的网站系统无可厚非，但一所大学的网站和一般的商业网站能同日而语吗">
+    
+    
+    
+    <meta name="twitter:card" content="summary" />
+    <meta name="twitter:site" content="jrhu05" />
+    <meta name="twitter:title" content="对本校校园网的一次友情检测 | JerryFu&#39;s Blog" />
+      
+    
+    
+    <link rel="alternate" href="http://www.jerryfu.net/atom.xml" title="JerryFu&#39;s Blog" type="application/atom+xml">
+    
+    
+    <link rel="icon" href="/img/favicon.ico">
+    
+    
+    <link rel="apple-touch-icon" href="/img/pacman.jpg">
+    <link rel="apple-touch-icon-precomposed" href="/img/pacman.jpg">
+    
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+
+  <body>
+    <header>
+      <div>
+		
+			<div id="imglogo">
+				<a href="/"><img src="/img/logo.png" alt="JerryFu&#39;s Blog" title="JerryFu&#39;s Blog"/></a>
+			</div>
+			
+			<div id="textlogo">
+				<h1 class="site-name"><a href="/" title="JerryFu&#39;s Blog">JerryFu&#39;s Blog</a></h1>
+				<h2 class="blog-motto">let us do sth interesting!</h2>
+			</div>
+			<div class="navbar"><a class="navbutton navmobile" href="#" title="菜单">
+			</a></div>
+			<nav class="animated">
+				<ul>
+					
+						<li><a href="/">Home</a></li>
+					
+						<li><a href="/about">About</a></li>
+					
+						<li><a href="/contact-me">Contact Me</a></li>
+					
+						<li><a href="/archives">Archives</a></li>
+					
+					<li>
+					
+						<form class="search" action="/search/index.html" method="get" accept-charset="utf-8">
+						<label>Search</label>
+						<input type="text" id="st-search-inpu" maxlength="20" placeholder="Search" />
+						</form>
+						
+					
+					</li>
+				</ul>
+			</nav>			
+</div>
+
+    </header>
+    <div id="container">
+      <div id="main" class="post" itemscope itemprop="blogPost">
+	<article itemprop="articleBody"> 
+		<header class="article-info clearfix">
+  <h1 itemprop="name">
+    
+      <a href="/post/hack-my-school.html" title="对本校校园网的一次友情检测" itemprop="url">对本校校园网的一次友情检测</a>
+  </h1>
+  <p class="article-author">By
+    
+      <a href="https://plus.google.com/116290701921732560000?rel=author" title="jrhu05" target="_blank" itemprop="author">jrhu05</a>
+    </p>
+  <p class="article-time">
+    <time datetime="2015-01-08T09:22:32.000Z" itemprop="datePublished">Jan 8 2015</time>
+    更新日期:<time datetime="2015-01-08T09:40:42.000Z" itemprop="dateModified">Jan 8 2015</time>
+    
+  </p>
+</header>
+	<div class="article-content">
+		
+		
+		<div id="toc" class="toc-article">
+			<strong class="toc-title">文章目录</strong>
+		
+		</div>
+		
+		<p>学校网站的安全性很差，这是我初步看过学校网站后的结论。</p>
+<p>学校的网站除了主页及少数几个下属分站是定制的系统外，其余全部的子网站全部是对已有的网站系统加以改进后而来的，因此便有了后话。建站工作量巨大，对于对安全系数要求不高的网站来说使用现成的网站系统无可厚非，但一所大学的网站和一般的商业网站能同日而语吗，使用现成的网站系统对于他们来说几乎就是致命的。</p>
+<p>学校的网站系统庞大冗杂，且不论其他的vod等服务，就单单院系部门就多达几十个：</p>
+<p><img src="/img/hack-my-school/1.jpg" alt=""></p>
+<p>整个服务公司的三个网站（后勤、饮食、置业）全部使用同一套管理系统，攻下任意一个站就等于攻下其他几个。</p>
+<p><a href="http://hq.hytc.edu.cn/index.asp" target="_blank" rel="external">http://hq.hytc.edu.cn/index.asp</a></p>
+<p><a href="http://hq.hytc.edu.cn/images/" target="_blank" rel="external">http://hq.hytc.edu.cn/images/</a><br><a href="http://hq.hytc.edu.cn/admin_edit.asp" target="_blank" rel="external">http://hq.hytc.edu.cn/admin_edit.asp</a><br><a href="http://hq.hytc.edu.cn/admin.asp" target="_blank" rel="external">http://hq.hytc.edu.cn/admin.asp</a><br><a href="http://hq.hytc.edu.cn/Admin_Login.asp" target="_blank" rel="external">http://hq.hytc.edu.cn/Admin_Login.asp</a><br><a href="http://hq.hytc.edu.cn/conn.asp" target="_blank" rel="external">http://hq.hytc.edu.cn/conn.asp</a><br><a href="http://hq.hytc.edu.cn/UploadFile/" target="_blank" rel="external">http://hq.hytc.edu.cn/UploadFile/</a><br><a href="http://hq.hytc.edu.cn/upload.asp" target="_blank" rel="external">http://hq.hytc.edu.cn/upload.asp</a><br><a href="http://hq.hytc.edu.cn/count/" target="_blank" rel="external">http://hq.hytc.edu.cn/count/</a><br><a href="http://hq.hytc.edu.cn/up.asp" target="_blank" rel="external">http://hq.hytc.edu.cn/up.asp</a></p>
+<p><a href="http://yinfu.hytc.edu.cn/" target="_blank" rel="external">http://yinfu.hytc.edu.cn/</a></p>
+<p>与上一个同一系统！！！！</p>
+<p>上述只是初步的嗅探结果。</p>
+<p><a href="http://syzy.hytc.edu.cn/" target="_blank" rel="external">http://syzy.hytc.edu.cn/</a></p>
+<p>这个站点用的是和我原来高中改版前的网站同样的系统，脆弱。</p>
+<p>再来看一下这个傻×网站：</p>
+<p><a href="http://hzhlab.hytc.edu.cn/main.aspx" target="_blank" rel="external">http://hzhlab.hytc.edu.cn/main.aspx</a></p>
+<p>江苏省环洪泽湖生态农业生物技术重点实验室</p>
+<p>所谓重点实验室尽然还存在低级的post注入点，尼玛随便找个带参数的asp地址，提交and 1=1 和and 1=2后，报错界面华丽丽的跳出眼帘。</p>
+<p>正常：<br><img src="/img/hack-my-school/2.jpg" alt=""><br>报错：<br><img src="/img/hack-my-school/3.jpg" alt=""><br>他喵的关键是注入点还不是一个两个，是他妹的一大堆。</p>
+<p>注入点：</p>
+<p><a href="http://hzhlab.hytc.edu.cn/more.aspx?classname=管理制度" target="_blank" rel="external">http://hzhlab.hytc.edu.cn/more.aspx?classname=管理制度</a></p>
+<p><a href="http://hzhlab.hytc.edu.cn/list.aspx?classname=本站新闻" target="_blank" rel="external">http://hzhlab.hytc.edu.cn/list.aspx?classname=本站新闻</a></p>
+<p><a href="http://hzhlab.hytc.edu.cn/shownews.aspx?id=124" target="_blank" rel="external">http://hzhlab.hytc.edu.cn/shownews.aspx?id=124</a></p>
+<p><a href="http://hzhlab.hytc.edu.cn/shownews.aspx?id=115" target="_blank" rel="external">http://hzhlab.hytc.edu.cn/shownews.aspx?id=115</a></p>
+<p><a href="http://hzhlab.hytc.edu.cn/shownews.aspx?id=43" target="_blank" rel="external">http://hzhlab.hytc.edu.cn/shownews.aspx?id=43</a></p>
+<p><a href="http://hzhlab.hytc.edu.cn/shownews.aspx?id=96" target="_blank" rel="external">http://hzhlab.hytc.edu.cn/shownews.aspx?id=96</a></p>
+<p>幸亏这只是个死站。手工猜解到的全是无用东东。Pass。</p>
+<p>下面在看看额们亲的图书馆。</p>
+<p>他喵的，还是他妹的post注入点，不给力啊。</p>
+<p>图书馆的网站不是死站所以有继续手工猜解的必要。</p>
+<p>成功select除admin的表名，额的哥神那，鸡冻那。</p>
+<p>下面俺懒得手工猜了，直接啊D上去扫吧。</p>
+<p>不一会儿，三个管理员的密码&lt;包含超级管理员&gt;（MD5）、用户名爆出</p>
+<p>[admin_password] : 0916251f74b37fba8eb9aad20e0acebb  [admin_name] : admin<br>[admin_password] : 4748b1c18098f8de219b184d599dc59a  [admin_name] : zcz<br>[admin_password] : a6d7986a389086af19ef6743f0c84f64  [admin_name] : 张莉</p>
+<p>先别急着高兴，他们的密码够强壮的， MD5值在MD5cracker上破不了，额又懒得动用肉鸡跑彩虹表，为了一个学校的服务器，不值得。所以以后大家设密码复杂一点是绝对没坏处的额O(∩_∩)O~。</p>
+<p>而且在对图书馆深度目录嗅探时发现了一个没有进行判断直接进普管的管理界面。</p>
+<p>地址：<a href="http://lib.hytc.edu.cn/******/admin_index.asp（我就不公布啦，防止有童鞋搞破坏）" target="_blank" rel="external">http://lib.hytc.edu.cn/******/admin_index.asp（我就不公布啦，防止有童鞋搞破坏）</a><br>我不能确定是不是蜜罐系统，因为这也太假了吧</p>
+<p>放图：<br><img src="/img/hack-my-school/4.jpg" alt=""></p>
+<p>好家伙，直接暴露了物理绝对路径。服务器的信息基本一览无余了。</p>
+<p>服务器的有关参数</p>
+<p> 服务器名     lib.hytc.edu.cn  </p>
+<p> 服务器IP     202.195.119.250  </p>
+<p> 服务器端口     80</p>
+<p> 服务器时间     2011-6-11 16:44:01</p>
+<p> IIS版本     Microsoft-IIS/6.0</p>
+<p> 脚本超时时间     90 秒</p>
+<p> 本文件路径      E:\tsg\admin\admin_aspcheck.asp</p>
+<p> 服务器CPU数量     个</p>
+<p> 服务器解译引擎     VBScript/5.6.8515</p>
+<p> 服务器操作系统     </p>
+<p>IIS自带的ASP组件</p>
+<p>组 件 名 称    支持及版本</p>
+<p> MSWC.AdRotator       √ </p>
+<p> MSWC.BrowserType       √ 4.00 </p>
+<p> MSWC.NextLink       √ “MSWC 内容链接对 </p>
+<p> MSWC.Tools       × </p>
+<p> MSWC.Status       × </p>
+<p> MSWC.Counters       × </p>
+<p> IISSample.ContentRotator       × </p>
+<p> IISSample.PageCounter       × </p>
+<p> MSWC.PermissionChecker       × </p>
+<p> Scripting.FileSystemObject (FSO 文本文件读写)      √ </p>
+<p> adodb.connection (ADO 数据对象)      √ 2.80 </p>
+<p>常见的文件上传和管理组件<br>组 件 名 称    支持及版本</p>
+<p> SoftArtisans.FileUp (SA-FileUp 文件上传)      × </p>
+<p> SoftArtisans.FileManager (SoftArtisans 文件管理)      × </p>
+<p> LyfUpload.UploadFile (文件上传组件)      × </p>
+<p> Persits.Upload.1 (ASPUpload 文件上传)      × </p>
+<p> w3.upload (Dimac 文件上传)      × </p>
+<p>常见的收发邮件组件</p>
+<p>组 件 名 称    支持及版本</p>
+<p> JMail.SmtpMail (Dimac JMail 邮件收发)       × </p>
+<p> CDONTS.NewMail (虚拟 SMTP 发信)      × </p>
+<p> Persits.MailSender (ASPemail 发信)      × </p>
+<p> SMTPsvg.Mailer (ASPmail 发信)      × </p>
+<p> DkQmail.Qmail (dkQmail 发信)      × </p>
+<p> Geocel.Mailer (Geocel 发信)      × </p>
+<p> IISmail.Iismail.1 (IISmail 发信)      × </p>
+<p> SmtpMail.SmtpMail.1 (SmtpMail 发信)      × </p>
+<p>图像处理组件</p>
+<p>组 件 名 称    支持及版本</p>
+<p> SoftArtisans.ImageGen (SA 的图像读写组件)      × </p>
+<p> W3Image.Image (Dimac 的图像读写组件)      × </p>
+<p>好啦，图书馆俺们就不动了，少说我还要去借书呢，额可不想把它搞出问题。</p>
+<p>其他的子网站数数科院的网站最为安全，毫无破绽，俺们老板就是来刺，不像某某计算机系的ls。</p>
+<p>直奔主题（上述一大圈都是废话）</p>
+<p>直接拿下咸鱼网。</p>
+<p>别告诉我你不知道学校的咸鱼网是啥子，就是那个团委的网站。</p>
+<p>去年刚进校时对学校的咸鱼网做过一次测试，那叫一个差啊。后来给他们留了个言，建议他们自己写系统，上上个星期C语言课时一时无聊（我们的C老师喜欢一连讲5节课，尼玛五节课啊！实验课愣是变成理论课！）顺手打开咸鱼网，额心想，还真改版啦，全部伪静态，应该不错撒。</p>
+<p>可是看这界面怎么这么像某某国内著名的CMS提供商的！于是无意间打开了管理员登陆地址：<a href="http://xyz.hytc.edu.cn/XXXX/login.asp" target="_blank" rel="external">http://xyz.hytc.edu.cn/XXXX/login.asp</a><br><img src="/img/hack-my-school/5.jpg" alt=""></p>
+<p>他喵的，看到了国内著名的kesion（科讯）cms。</p>
+<p>废话少说，科讯的系统额别提多熟悉了，抱着试试看的态度直接试数据库地址，…../KS_Data/KesionCMS7.mdb</p>
+<p>熟悉的下载界面：（他喵的130mb，幸亏是内网O(∩_∩)O~）<br><img src="/img/hack-my-school/6.jpg" alt=""></p>
+<p>我不得不大声惊呼，“老师你到底有多么天然呆啊！”</p>
+<p>默认数据库地址你不该就算了，放下载处理你也不做，我真是佩服的五体投地类纽曼面。<br>果断下载后打开，直接定位关键表段。</p>
+<p><img src="/img/hack-my-school/7.jpg" alt=""></p>
+<p>又是十六位的MD5，继续MD5cracker，还是无果，不过别灰心，我们可以改密码哈O(∩_∩)O~。<br>果断忘记密码：</p>
+<p><img src="/img/hack-my-school/8.jpg" alt=""></p>
+<p>密码找回：</p>
+<p><img src="/img/hack-my-school/9.jpg" alt=""></p>
+<p>这答案设的，太有才了。</p>
+<p><img src="/img/hack-my-school/10.jpg" alt=""></p>
+<p>直奔后台<a href="http://xyz.hytc.edu.cn/XXXX/login.asp" target="_blank" rel="external">http://xyz.hytc.edu.cn/XXXX/login.asp</a></p>
+<p>就差最后一关了，认证码，默认的为8888，不知改了没，不过看这架势，十有八九没改。<br>果不其然，成功到达可爱的后台。</p>
+<p><img src="/img/hack-my-school/11.jpg" alt=""></p>
+<p>下面挂马提权的事我就不干了，毕竟是自己的学校，决不能给学校抹黑，O(∩_∩)O~。<br>果断把自己改成博士生：</p>
+<p><img src="/img/hack-my-school/12.jpg" alt=""></p>
+<p>呵呵，开个玩笑而已。</p>
+<p>就此渗透测试结束，正好到5:30，额先去吃饭，回来接着写O(∩_∩)O~。</p>
+<p>吃完回来了，南苑食堂的豆角包很赞。推荐你们去吃吃看。</p>
+<p>再来看看负责这个系统的可爱老师：</p>
+<p>姓 名    杨**</p>
+<p>性 别    男</p>
+<p>职 称    讲师</p>
+<p>所在院系    计算机科学与技术学院</p>
+<p>联系电话    139…5234</p>
+<p>通讯地址    江苏省淮安市长江西路111号</p>
+<p>教师简介男，1973年生,江苏淮安人，1997年毕业于郑州航空工业管理学院，获理学士学位，同年进入淮阴师范学院工作；2004年进入南京信息工程大学攻读硕士学位，现工作于淮阴师范学院计算机科学与科术学院，讲授计算机网络》、《网络编程》、《基于WEB的程序设计》等课程，并从事网站开发相关工作。</p>
+<p>在教学过程,注重对学生理论结合动手能力的培养,以团队形式结合实际项目培养学生的能力,在做好教学工作的同时,还开发了多家政府、企业和学校部门网站，为本课程的教学奠定了良好的基础。</p>
+<p>介绍写的挺那啥的，8过不负责任是很明显的了，基本的安全防御都没做就让咸鱼网仓促上线，要说你是不会捏鬼才信。</p>
+<p>连基本的用户普遍不信任原则都没有进行践行、最基本的修改都没做、连防下载处理都没做、校验码也没改、、、、、、、</p>
+<p>Kesioncms如此优秀的一款整站系统被用成这样，无语啊。</p>
+  
+	</div>
+		<footer class="article-footer clearfix">
+
+  <div class="article-tags">
+  
+  <span></span> <a href="/tags/渗透/">渗透</a>
+  </div>
+
+
+<div class="article-categories">
+  <span></span>
+  <a class="article-category-link" href="/categories/网络安全/">网络安全</a>
+</div>
+
+
+
+<div class="article-share" id="share">
+
+  
+<div class="jiathis_style">
+    <span class="jiathis_txt">分享到：</span>
+    <a class="jiathis_button_tsina">新浪微博</a>
+    <a class="jiathis_button_weixin">微信</a>
+    <a class="jiathis_button_twitter">Twitter</a>
+    <a class="jiathis_button_evernote">EverNote</a>
+    <a href="http://www.jiathis.com/share?uid=1501277" class="jiathis jiathis_txt jiathis_separator jtico jtico_jiathis" target="_blank">更多</a>
+</div>
+<script type="text/javascript" >
+    var jiathis_config={
+    data_track_clickback:true,
+    sm:"copy,renren,cqq",
+    pic:"",
+    summary:"",
+     ralateuid:{"tsina":"3114414043"},hideMore:false}
+    
+  </script> 
+<script type="text/javascript" src="//v3.jiathis.com/code/jia.js?uid=
+2002002" charset="utf-8"></script>      
+
+
+</div>
+</footer>   	       
+	</article>
+	
+<nav class="article-nav clearfix">
+ 
+ <div class="prev" >
+ <a href="/post/pic-see-assister.html" title="教务处照片查看器原理及源码">
+  <strong>PREVIOUS:</strong><br/>
+  <span>
+  教务处照片查看器原理及源码</span>
+</a>
+</div>
+
+
+<div class="next">
+<a href="/post/homeWilless-upgrade.html"  title="家庭无线信息化改造">
+ <strong>NEXT:</strong><br/> 
+ <span>家庭无线信息化改造
+</span>
+</a>
+</div>
+
+</nav>
+
+	
+<!-- 多说评论框 start -->
+	<div class="ds-thread" data-thread-key="post/hack-my-school.html" data-title="对本校校园网的一次友情检测" data-url="http://jrhu05.github.io/post/hack-my-school.html"></div>
+<!-- 多说评论框 end -->
+<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
+<script type="text/javascript">
+var duoshuoQuery = {short_name:"jrhu05"};
+	(function() {
+		var ds = document.createElement('script');
+		ds.type = 'text/javascript';ds.async = true;
+		ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+		ds.charset = 'UTF-8';
+		(document.getElementsByTagName('head')[0] 
+		 || document.getElementsByTagName('body')[0]).appendChild(ds);
+	})();
+	</script>
+<!-- 多说公共JS代码 end -->
+
+
+</div>  
+      <div class="openaside"><a class="navbutton" href="#" title="显示侧边栏"></a></div>
+
+  <div id="toc" class="toc-aside">
+  <strong class="toc-title">文章目录</strong>
+  
+  </div>
+
+<div id="asidepart">
+<div class="closeaside"><a class="closebutton" href="#" title="隐藏侧边栏"></a></div>
+<aside class="clearfix">
+
+  
+<div class="categorieslist">
+	<p class="asidetitle">分类</p>
+		<ul>
+		
+			<li><a href="/categories/本科阶段/" title="本科阶段">本科阶段<sup>4</sup></a></li>
+		
+			<li><a href="/categories/琐事物语/" title="琐事物语">琐事物语<sup>12</sup></a></li>
+		
+			<li><a href="/categories/研究僧呀/" title="研究僧呀">研究僧呀<sup>13</sup></a></li>
+		
+			<li><a href="/categories/算法寻径/" title="算法寻径">算法寻径<sup>8</sup></a></li>
+		
+			<li><a href="/categories/网络安全/" title="网络安全">网络安全<sup>4</sup></a></li>
+		
+		</ul>
+</div>
+
+
+  
+  <div class="tagcloudlist">
+    <p class="asidetitle">标签云</p>
+    <div class="tagcloudlist clearfix">
+       <a href="/tags/BSC模拟器/" style="font-size: 10px;">BSC模拟器</a> <a href="/tags/Bezier曲线段的拼接/" style="font-size: 10px;">Bezier曲线段的拼接</a> <a href="/tags/Hamming模拟器/" style="font-size: 10px;">Hamming模拟器</a> <a href="/tags/LCS问题/" style="font-size: 10px;">LCS问题</a> <a href="/tags/Social-Engineering/" style="font-size: 10px;">Social Engineering</a> <a href="/tags/awt/" style="font-size: 15px;">awt</a> <a href="/tags/crc/" style="font-size: 10px;">crc</a> <a href="/tags/hexo搜索/" style="font-size: 15px;">hexo搜索</a> <a href="/tags/java/" style="font-size: 20px;">java</a> <a href="/tags/pathfinding/" style="font-size: 10px;">pathfinding</a> <a href="/tags/rho/" style="font-size: 10px;">rho</a> <a href="/tags/swiftype/" style="font-size: 15px;">swiftype</a> <a href="/tags/swing/" style="font-size: 10px;">swing</a> <a href="/tags/七牛云/" style="font-size: 10px;">七牛云</a> <a href="/tags/乐享/" style="font-size: 10px;">乐享</a> <a href="/tags/使用帮助/" style="font-size: 10px;">使用帮助</a> <a href="/tags/信息论/" style="font-size: 15px;">信息论</a> <a href="/tags/关于爱情/" style="font-size: 10px;">关于爱情</a> <a href="/tags/动态规划/" style="font-size: 10px;">动态规划</a> <a href="/tags/华为实习生/" style="font-size: 10px;">华为实习生</a> <a href="/tags/合数分解/" style="font-size: 10px;">合数分解</a> <a href="/tags/回朔法/" style="font-size: 10px;">回朔法</a> <a href="/tags/域名申诉/" style="font-size: 10px;">域名申诉</a> <a href="/tags/大数/" style="font-size: 10px;">大数</a> <a href="/tags/天才病/" style="font-size: 10px;">天才病</a> <a href="/tags/安全感/" style="font-size: 10px;">安全感</a> <a href="/tags/安卓/" style="font-size: 10px;">安卓</a> <a href="/tags/归并排序/" style="font-size: 10px;">归并排序</a> <a href="/tags/快速排序/" style="font-size: 10px;">快速排序</a> <a href="/tags/总结/" style="font-size: 10px;">总结</a> <a href="/tags/手机通讯录/" style="font-size: 10px;">手机通讯录</a> <a href="/tags/插入排序/" style="font-size: 10px;">插入排序</a> <a href="/tags/方正教务系统0day漏洞/" style="font-size: 10px;">方正教务系统0day漏洞</a> <a href="/tags/无线信息化改造/" style="font-size: 10px;">无线信息化改造</a> <a href="/tags/最近点对/" style="font-size: 10px;">最近点对</a> <a href="/tags/朋友/" style="font-size: 10px;">朋友</a> <a href="/tags/模2除法/" style="font-size: 10px;">模2除法</a> <a href="/tags/模拟游戏下载/" style="font-size: 10px;">模拟游戏下载</a> <a href="/tags/渗透/" style="font-size: 10px;">渗透</a> <a href="/tags/游记/" style="font-size: 15px;">游记</a> <a href="/tags/电信客户端破解/" style="font-size: 15px;">电信客户端破解</a> <a href="/tags/矩阵区分-算法-worksapplication机试/" style="font-size: 10px;">矩阵区分,算法,worksapplication机试</a> <a href="/tags/秒速5厘米/" style="font-size: 10px;">秒速5厘米</a> <a href="/tags/老师/" style="font-size: 10px;">老师</a> <a href="/tags/花钱/" style="font-size: 10px;">花钱</a> <a href="/tags/计算机图形学/" style="font-size: 10px;">计算机图形学</a> <a href="/tags/贪心算法/" style="font-size: 10px;">贪心算法</a> <a href="/tags/连连看/" style="font-size: 10px;">连连看</a> <a href="/tags/随机算法/" style="font-size: 10px;">随机算法</a>
+    </div>
+  </div>
+
+
+  <div class="linkslist">
+  <p class="asidetitle">友情链接</p>
+    <ul>	
+      <li><a href="http://www.hytcshare.com" target="_blank" title="淮师乐享">Hytcshare</a></li>
+      <li><a href="https://blog.dimension.moe" target="_blank" title="萌萌的学弟">dimension</a></li>
+      <li><a href="http://dtysky.moe" target="_blank" title="少女心的大叔">dtysky</a></li>
+      <li><a href="http://hexo.io" target="_blank" title="Hexo">Hexo</a></li>
+    </ul>
+</div>
+
+
+  <div class="rsspart">
+	<a href="http://www.jerryfu.net/atom.xml" target="_blank" title="rss">RSS 订阅</a>
+</div>
+
+</aside>
+</div>
+    </div>
+    <footer><div id="footer" >
+	
+	<div class="line">
+		<span></span>
+		<div class="author"></div>
+	</div>
+	
+	
+	<section class="info">
+		<p> Hello, I am JerryFu, now I am a postgraduate student in SEU. <br/>
+			I am interested in network security, and I hope my blog will give you sth interesting or useful.</p>
+	</section>
+	 
+	<div class="social-font clearfix">
+		
+		<a href="http://weibo.com/3114414043" target="_blank" title="weibo"></a>
+		
+		
+		<a href="https://twitter.com/jrhu05" target="_blank" title="twitter"></a>
+		
+		
+		<a href="https://gitcafe.com/jrhu05" target="_blank" title="github"></a>
+		
+		
+		<a href="https://www.facebook.com/jrhu05" target="_blank" title="facebook"></a>
+		
+		
+	</div>
+		<p class="copyright">Powered by <a href="http://hexo.io" target="_blank" title="hexo">hexo</a>, Deploy on <a href="https://github.com" target="_blank" title="github">github</a>, <a href="https://coding.net/" target="_blank" title="coding">coding</a> and Theme by <a href="https://github.com/A-limon/pacman" target="_blank" title="Pacman">Pacman</a> © 2016 
+		
+		<a href="http://jrhu05.github.io" target="_blank" title="jrhu05">jrhu05</a>
+		
+		<script type="text/javascript">var cnzz_protocol = (("https:" == document.location.protocol) ? " https://" : " http://");document.write(unescape("%3Cspan id='cnzz_stat_icon_3067169'%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "s5.cnzz.com/stat.php%3Fid%3D3067169%26show%3Dpic' type='text/javascript'%3E%3C/script%3E"));</script>
+		</p>
+		
+		<script type="text/javascript">
+  (function(w,d,t,u,n,s,e){w['SwiftypeObject']=n;w[n]=w[n]||function(){
+  (w[n].q=w[n].q||[]).push(arguments);};s=d.createElement(t);
+  e=d.getElementsByTagName(t)[0];s.async=1;s.src=u;e.parentNode.insertBefore(s,e);
+  })(window,document,'script','//s.swiftypecdn.com/install/v1/st.js','_st');
+
+  _st('install','auhSjJgvzA1Ct722dXyr');
+</script>
+
+</div>
+</footer>
+    <!-- mathjax config similar to math.stackexchange -->
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+      processEscapes: true
+    }
+  });
+</script>
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+      tex2jax: {
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+      }
+    });
+</script>
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for(i=0; i < all.length; i += 1) {
+            all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+    });
+</script>
+<!-- http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML -->
+<!-- http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=default -->
+<script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=default">
+</script>
+<script src="/js/jquery-2.1.0.min.js"></script>
+<script type="text/javascript">
+$(document).ready(function(){ 
+  $('.navbar').click(function(){
+    $('header nav').toggleClass('shownav');
+  });
+  var myWidth = 0;
+  function getSize(){
+    if( typeof( window.innerWidth ) == 'number' ) {
+      myWidth = window.innerWidth;
+    } else if( document.documentElement && document.documentElement.clientWidth) {
+      myWidth = document.documentElement.clientWidth;
+    };
+  };
+  var m = $('#main'),
+      a = $('#asidepart'),
+      c = $('.closeaside'),
+      o = $('.openaside');
+  $(window).resize(function(){
+    getSize(); 
+    if (myWidth >= 1024) {
+      $('header nav').removeClass('shownav');
+    }else
+    {
+      m.removeClass('moveMain');
+      a.css('display', 'block').removeClass('fadeOut');
+      o.css('display', 'none');
+      
+      $('#toc.toc-aside').css('display', 'none');
+        
+    }
+  });
+  c.click(function(){
+    a.addClass('fadeOut').css('display', 'none');
+    o.css('display', 'block').addClass('fadeIn');
+    m.addClass('moveMain');
+  });
+  o.click(function(){
+    o.css('display', 'none').removeClass('beforeFadeIn');
+    a.css('display', 'block').removeClass('fadeOut').addClass('fadeIn');      
+    m.removeClass('moveMain');
+  });
+  $(window).scroll(function(){
+    o.css("top",Math.max(80,260-$(this).scrollTop()));
+  });
+});
+</script>
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var ai = $('.article-content>iframe'),
+      ae = $('.article-content>embed'),
+      t  = $('#toc'),
+      h  = $('article h2')
+      ah = $('article h2'),
+      ta = $('#toc.toc-aside'),
+      o  = $('.openaside'),
+      c  = $('.closeaside');
+  if(ai.length>0){
+    ai.wrap('<div class="video-container" />');
+  };
+  if(ae.length>0){
+   ae.wrap('<div class="video-container" />');
+  };
+  if(ah.length==0){
+    t.css('display','none');
+  }else{
+    c.click(function(){
+      ta.css('display', 'block').addClass('fadeIn');
+    });
+    o.click(function(){
+      ta.css('display', 'none');
+    });
+    $(window).scroll(function(){
+      ta.css("top",Math.max(140,320-$(this).scrollTop()));
+    });
+  };
+});
+</script>
+
+
+
+
+
+
+
+  </body>
+</html>
