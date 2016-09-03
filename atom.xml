@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://jrhu05.github.io/"/>
-  <updated>2016-08-28T04:29:14.000Z</updated>
+  <updated>2016-09-03T15:55:38.000Z</updated>
   <id>http://jrhu05.github.io/</id>
   
   <author>
@@ -14,6 +14,113 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>利用Scamper工具解析CAIDA trace数据</title>
+    <link href="http://jrhu05.github.io/post/how-to-use-Scamper.html"/>
+    <id>http://jrhu05.github.io/post/how-to-use-Scamper.html</id>
+    <published>2016-09-03T15:35:04.000Z</published>
+    <updated>2016-09-03T15:55:38.000Z</updated>
+    
+    <content type="html"><![CDATA[<ol>
+<li>首先，需要到<a href="http://www.caida.org/tools/measurement/scamper/" target="_blank" rel="external">http://www.caida.org/tools/measurement/scamper/</a>网站下载工具的源码。</li>
+<li>下载源码后，将源码复制到Linux系统下，准备编译。</li>
+<li>打开linux命令行终端，定位到源码目录下，可以发现源码文件下有一个configure文件。</li>
+<li>命令行终端下，输入./configure。</li>
+<li>命令行终端下，输入make。</li>
+<li>命令行终端下，输入make install。</li>
+<li>至此，编译工作就结束了，你可以在usr/local/bin目录下看到编译好的工具。</li>
+<li>直接在命令行终端输入sc_analysis_dump等相应的命令就可以解析文件了。</li>
+<li>一般的解析文件的命令格式为sc_analysis_dump ﬁle1.warts，可用&gt;&gt;输入到指定的文件中，实例如：</li>
+</ol>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sc_analysis_dump ﬁle1.warts &gt;&gt; file1.txt</span><br></pre></td></tr></table></figure>
+<p>下面附上详细使用说明：</p>
+<p>sc_analysis_dump man page: convert scamper traces to something easily parsed with perl</p>
+<p>NAME</p>
+<p>　　sc_analysis_dump—dump of traceroute data in a format that is easily parsed.</p>
+<p>SYNOPSIS</p>
+<p>　　sc_analysis_dump [ −cCdeghHiloprst][ −D debug-count][ −G geo-server]<br>[ −S skip-count][file . ..]</p>
+<p>DESCRIPTION</p>
+<p>　　The sc_analysis_dump utility provides a dump of traceroute data in a format that is easily parsed by<br>scripts. Each line output contains a summary of a single trace, and includes the interfaces visited and the<br>delay of each response. The output format is identical to that of sk_analysis_dump from CAIDA, except that<br>it uses the scamper ﬁle API to read both arts++ ﬁles produced by skitter and warts ﬁles produced by scamper.</p>
+<p>　　The options are as follows:</p>
+<p>　　−c disables printing the cycle number in each line of output.</p>
+<p>　　−C disables printing the comments about the output at the top of the output.</p>
+<p>　　−d disables printing the destination address in each line of output.</p>
+<p>　　−D debug-count</p>
+<p>　　　　for each input ﬁle stop reading after the speciﬁed number of traces.</p>
+<p>　　−e adds the response from the destination to each line of output.</p>
+<p>　　−g use geographical data from netacuity.Not all builds of sc_analysis_dump support this option.</p>
+<p>　　−G geo-server</p>
+<p>　　　　speciﬁes the name of the netacuity server to use.</p>
+<p>　　−h prints a help message and then exits.</p>
+<p>　　−H disables printing the halt ﬁelds: whytraceroute halted and data for that reason.</p>
+<p>　　−i disables printing the RTT to each hop, and howmanytries were required.</p>
+<p>　　−l disables printing the list id in each line of output.</p>
+<p>　　−o prints each line of output using the old format from sk_analysis_dump 1.0.</p>
+<p>　　−p disables print path data in each line of output.</p>
+<p>　　−r disables printing the data associated the response from a destination: the RTT,the TTL of the probe,and the TTL of the response.</p>
+<p>　　−s disables printing the source IP address in each line of output.</p>
+<p>　　−S skip-count</p>
+<p>　　　　skips the deﬁned number of traces from each input ﬁle.</p>
+<p>　　−t disables printing the timestamp of when the traceroute began.</p>
+<p>OUTPUT</p>
+<p>　　There is one trace per line. Fields are separated by a tab character.The output is structured into header ﬁelds<br>(2 to 6), reply ﬁelds (7 to 10) corresponding to the response receivedfrom the destination, halt ﬁelds (11 and<br>12), and hop ﬁelds (beginning at index13).</p>
+<p>1.Key</p>
+<p>　　Indicates the type of line and determines the meaning of the remaining ﬁelds. This will always be ’T’ for an IP trace.<br>FreeBSD 8.2 October 15, 2010 1SC_ANALYSIS_DUMP (1) FreeBSD General Commands Manual SC_ANALYSIS_DUMP (1)</p>
+<p>2.Source</p>
+<p>　　Source IP of skitter/scamper monitor performing the trace.</p>
+<p>3.Destination </p>
+<p>　　Destination IP being traced.</p>
+<p>4.ListId</p>
+<p>　　ID of the destination list containing this destination address. This value will be zero if no list ID<br>wasprovided. A ListId is a 32 bit unsigned integer.</p>
+<p>5.CycleId</p>
+<p>　　ID of current probing cycle. A cycle is a single run through a givenlist. A CycleId is a 32 bit<br>unsigned integer.For skitter traces, cycle IDs will be equal to or slightly earlier than the time-<br>stamp of the ﬁrst trace in each cycle. There is no standard interpretation for scamper cycle IDs.</p>
+<p>　　This value will be zero if no cycle ID was provided.</p>
+<p>6.Timestamp</p>
+<p>　　Timestamp when trace begantothis destination.</p>
+<p>7.DestReplied</p>
+<p>　　Whether a response from the destination was received. The character R is printed if a reply was<br>received. The character N is printed if no reply was received. Since skitter sends a packet with a<br>TTL of 255 when it halts probing, it is still possible for the ﬁnal destination to send a reply and<br>for the HaltReasonData (see below) to not equal no_halt. Note: scamper does not perform this<br>last-ditch probing at TTL 255 by default.</p>
+<p>8.DestRTT</p>
+<p>　　The RTT (ms) of ﬁrst response packet from destination. This value is zero if DestReplied is N.</p>
+<p>9.RequestTTL</p>
+<p>　　TTL set in request packet which elicited a response (echo reply) from the destination. This value<br>is zero if DestReplied is N.</p>
+<p>10.ReplyTTL</p>
+<p>　　TTL found in reply packet from destination. This value is zero if DestReplied is N.</p>
+<p>11.HaltReason</p>
+<p>　　Asingle character corresponding to the reason, if any, why incremental probing stopped. Sis<br>printed if the destination was reached or there is no halt data. Uisprinted if an ICMP unreach-<br>able message was received. L is printed if a loop was detected. Gisprinted if the gaplimit was<br>reached.</p>
+<p>12.HaltReasonData</p>
+<p>　　Extra data about whyprobing halted. If HaltReason is S, the zero is output. If HaltReason is U,<br>the ICMP code of the unreachable message is printed. If HaltReason is L, the length of the loop<br>is printed. If HaltReason is G, the length of the gap is printed.</p>
+<p>13.PathComplete</p>
+<p>　　Whether all hops to destination were found. Cisprinted if the trace is complete, all hops are<br>found. I is printed if the trace is incomplete, at least one hop is missing (i.e., did not respond).<br>FreeBSD 8.2 October 15, 2010 2SC_ANALYSIS_DUMP (1) FreeBSD General Commands Manual SC_ANALYSIS_DUMP (1)</p>
+<p>14.PerHopData</p>
+<p>　　Response data for each hop. If multiple IP addresses respond at the same hop, response data for<br>each IP address are separated by semicolons:<br>IP,RTT,numTries (for only one responding IP) IP,RTT,numTries;IP,RTT,numTries;… (for multiple<br>responding IPs)<br>where IP is the IP address which sent a TTL expired packet, RTT is the RTT of the TTL expired<br>packet, and numTries is the number of tries before a response was receivedfrom the TTL.</p>
+<p>　　This ﬁeld has the value ’q’ if there was no response at a hop.</p>
+<p>EXAMPLES</p>
+<p>　　The command:  </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sc_analysis_dump ﬁle1.warts ﬁle2.warts</span><br></pre></td></tr></table></figure>
+<p>will decode and print the traceroute objects in ﬁle1.warts, followed by the traceroute objects in ﬁle2.warts.</p>
+<p>　　The command:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">gzcat ﬁle1.warts.gz | sc_analysis_dump</span><br></pre></td></tr></table></figure>
+<p>will decode and print the traceroute objects in the uncompressed ﬁle supplied on stdin.</p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;ol&gt;
+&lt;li&gt;首先，需要到&lt;a href=&quot;http://www.caida.org/tools/measurement/scamper/&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;http://www.caida.org/tools/measureme
+    
+    </summary>
+    
+      <category term="研究僧呀" scheme="http://jrhu05.github.io/categories/%E7%A0%94%E7%A9%B6%E5%83%A7%E5%91%80/"/>
+    
+    
+      <category term="CAIDA" scheme="http://jrhu05.github.io/tags/CAIDA/"/>
+    
+      <category term="Scamper" scheme="http://jrhu05.github.io/tags/Scamper/"/>
+    
+      <category term="traceRoute" scheme="http://jrhu05.github.io/tags/traceRoute/"/>
+    
+  </entry>
   
   <entry>
     <title>虎踞龙盘PT站漏洞修复</title>
@@ -443,44 +550,6 @@ public class CharacterRecongnition {
   </entry>
   
   <entry>
-    <title>友人A</title>
-    <link href="http://jrhu05.github.io/post/friendA.html"/>
-    <id>http://jrhu05.github.io/post/friendA.html</id>
-    <published>2016-05-23T13:22:11.000Z</published>
-    <updated>2016-05-23T14:20:19.000Z</updated>
-    
-    <content type="html"><![CDATA[<p>　　我们这一辈子或许会遇到很多的人，有的人注定是匆匆过客，而有的人则会在你的心中留下深深的印记。</p>
-<p>　　好久不曾联系，偶然间通了音信，居然熟络的一如当年，时间未曾疏远了些许。“喂，XXX吗？我是XXX。”，“哦，我知道，我X你大爷。”，男人与男人之间，就是这么简单随意。</p>
-<p>　　我和他初三那会儿是同班，很不凑巧的是同桌。当时我们班主任比较开放，排位置的时候让我们自己选座位，当然成绩好的先选，已选的位子标记一下。轮到我的时候，从小就是个选择困难症患者，墨迹了半天，结果老师不耐烦了，说：“好啦，我来帮你选。”，结果后来才知道老班把最后剩下的一个没人要的位子给我了，哭。然后公布座位表的那天，我一看座位表头都大了，居然是第一排紧贴着老师讲桌那个座位，完蛋了，没法上课开小差什么的了。然后一看同桌，A君，知道有这号人存在，不了解，罢罢，算我倒霉。我坐下后，还在纠结第一排的事情，结果他瞟了我一眼，“我是XXX，不喜欢和笨的人来往，别烦我。”，我瞬间给噎的不知道该怎么回，我看起来有那么笨？等我想了半天终于想好了该怎么反击的时候，好家伙，他居然开始呼起来了，我去，同桌是个极品。</p>
-<p>　　然后，就是平平淡淡的日常，刚开始他倒是挺老实的，虽不认真听，但也就走走神画画小人什么的。一个星期后狐狸尾巴终于露出来了，英语课，书一架，直接开始看小说书了，你当老师瞎啊，就在眼皮子底下怎么可能看不到，我心想有好戏看了，结果老师居然不闻不问。他一看老师不管，更嚣张，挡也不档了，直接拿到书桌上开看，还边看边写写画画，不知道的人可能还以为这小子学习好认真啊。我心想，这也太不公平了，成绩好就能为非作歹么，无奈我是个半吊子，学来学去成绩也不见起色。</p>
-<p>　　他脑袋瓜子确实聪明，据他自己吹嘘IQ125，我心想好嘛翻倍正好250，很符合你的个性。他那时候成绩从来没掉出过前五，但是你要说是也像那些女生那样认认真真学取得这样的成绩也就算了，关键是他毛都没学啊，上课不听，下课不做作业，考前不复习，没事还和老师顶一下，天天耷拉个拖鞋，有次考试居然连笔都没带，还是我借给他的。这种存在简直就是啪啪啪的打我们这些个吭哧吭哧学的笨蛋的脸啊，当时小心眼各种羡慕嫉妒恨。</p>
-<p>　　他从那次看小说之后越发嚣张，不知道从哪里搞来了一个步步高电子词典，下了一个叫什么三国霸业的游戏，玩的不亦乐乎。后来又弄了套卡牌，自己和自己打着玩，我都看呆掉了，真乃神人耶。他对我的态度也从最初的爱理不理慢慢的发生转变，我请教他问题他也会大笔一挥提点一番，我每次请教他问题都会有一种莫名的屈辱感，哼，聪明就了不起啊，有时候他画的实在太简洁我就不得不厚脸皮再多问问，结果他就用一种同情看智障的眼光看着我，看得我也不好意思再问，整的一肚子火只好趁其不在猛踹几下他凳子桌子什么的。</p>
-<p>　　后来可能他玩的可能实在太腻歪了，一天午休时候，他玩他的，我睡我的，突然猛的给了我一肘子，我差点没蹦起来。正准备发作，他对我甩了甩电子词典，“要玩吗？”，玩你大爷啊，老子气得要死，忍着没骂出去。然后我又趴桌子上睡了，结果好家伙，又是一肘子，得得得，大哥，你牛x还不行吗，我玩，我玩。然后就接过来开始玩，由于之前从来没玩过，所以什么也不懂，然后他就给我介绍起来，什么要屯兵、和谁联合打谁、打曹操一打一个准，因为曹操粮草带的总不多（设计这游戏的是弱智么）、谁该招降招降该剁了剁了，还给我总结了一套发展不如去抢的理论，然后还时不时的骂一句怎么这么笨，这都能打不过。然后我就给他带坑里去了，上课也开始偷偷摸摸看小说玩游戏什么的，每天都过着偷鸡摸狗良心被谴责的日子，后来和他聊这事情，他大大咧咧的和我说，没事，你以前就是因为学的太多了，脑子给学不灵活了，我这带你打通脑部筋脉血络，你放心，成绩一定不会下降，说不定还能上升呢。年少无知的我，居然信了，信了，然后每天也跟他一样吊儿郎当的，由于是初三毕业班，大家都很认真，就我们俩异类，然后就被戏称为“混子二人组”，他那是被人戏称，我那是实打实的混日子。结果到期中考试后，我哭了。</p>
-<p>　　他还是前五，我就惨了，直接快倒数了，老班直接找到我说“XXX，你别和XXX学啊，他那么聪明，你那么笨，blablabla”，老师这么一说我哭的更凶了。老班安慰半天，完了跟我嘱咐，以后上课认真听讲，别看小人书玩游戏什么的，还有时间加把劲可以的。我赶紧谢过。回班后他一看我这惨样，忍着笑说，你以后别玩我的游戏机和看我的书了，认真学习吧笨蛋。</p>
-<p>　　自那以后我是没再看小说书和玩游戏，不过和他聊天吹牛什么的还是有的，我也了解到了他的人生观价值观以及今后的追求。对于一个人生观、价值观尚在形成，人生目标什么的完全没有的小白来说，遇到一个这么三观正、有理想的小青年，简直崇拜的不要不要的。他那种散漫、闲适的生活方式与追求也深刻影响到了我后来的种种选择，称之为导师不为过。</p>
-<p>　　他也把很多东西传染给了我，火影是他带我入坑的，虽然他现在已经不看了。在此之前我也就知道一个百变小樱什么的，可以说是他带我踏入二次元。科幻小说也是他带我看的，朴树的歌是他带我听的。我那时候从我爸那儿得到一个MP3，那时候可以说是很时髦的，好家伙，给他知道后直接霸占了，我都得找他借，不过也因此听到了不少好歌，当年学校门前小商铺下载歌曲一首都得好几块，我穷的根本下不起歌，人家土豪，一来就是：老板，下满！</p>
-<p>　　我们那时候很巧的是宿舍也在一起，床头对床头，我有时候嫌他脚臭会睡到另一头。记得中考那夜，我失眠了，小小年纪慌得不成样子，不知怎么的居然哭了起来，怕打扰别人休息只能抽抽噎噎，估计他给吵醒了，小声问明白后，不停的安慰我，不要紧什么的，后来我居然就这么迷迷糊糊睡着了。第二天我是精神不错，他就不行了，困困蔫蔫的，现在想来也很是愧疚。</p>
-<p>　　后来中考结束，我很是意外的考取了本校的正取（免学杂费，私立学校当时学费就得好多），但是还是很矫情的在家人面前哭了一鼻子，以示自己没做到最好，然后背地里偷着乐。他好像没怎么考好，不知是不是因为那晚没睡好的缘故，后来他选择去了公家的县立中学，我知道后互道了一声珍重再见，却不知这一别竟是近十年的鸿沟。虽在同一个小城，可高中后课务繁忙，而且两校之间互有门禁，也就没再联系。高中毕业后，去了不同的大学，更没有联系。大学毕业后他南下闯荡，我读研，距离越来越远。</p>
-<p>　　虽过去了近十年，可那些事情、那些话却未曾淡忘了半分。</p>
-<p>　　前些天联系，我半开玩笑的说要去找他蹭饭，这顿饭我蹭定了什么的，然后他爽快的说，行，没问题。</p>
-<p>　　得此良友，足矣。</p>
-]]></content>
-    
-    <summary type="html">
-    
-      &lt;p&gt;　　我们这一辈子或许会遇到很多的人，有的人注定是匆匆过客，而有的人则会在你的心中留下深深的印记。&lt;/p&gt;
-&lt;p&gt;　　好久不曾联系，偶然间通了音信，居然熟络的一如当年，时间未曾疏远了些许。“喂，XXX吗？我是XXX。”，“哦，我知道，我X你大爷。”，男人与男人之间，就是这么简
-    
-    </summary>
-    
-      <category term="琐事物语" scheme="http://jrhu05.github.io/categories/%E7%90%90%E4%BA%8B%E7%89%A9%E8%AF%AD/"/>
-    
-    
-      <category term="朋友" scheme="http://jrhu05.github.io/tags/%E6%9C%8B%E5%8F%8B/"/>
-    
-  </entry>
-  
-  <entry>
     <title>杭州</title>
     <link href="http://jrhu05.github.io/post/hangchou.html"/>
     <id>http://jrhu05.github.io/post/hangchou.html</id>
@@ -530,6 +599,44 @@ public class CharacterRecongnition {
     
     
       <category term="游记" scheme="http://jrhu05.github.io/tags/%E6%B8%B8%E8%AE%B0/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>友人A</title>
+    <link href="http://jrhu05.github.io/post/friendA.html"/>
+    <id>http://jrhu05.github.io/post/friendA.html</id>
+    <published>2016-05-23T13:22:11.000Z</published>
+    <updated>2016-05-23T14:20:19.000Z</updated>
+    
+    <content type="html"><![CDATA[<p>　　我们这一辈子或许会遇到很多的人，有的人注定是匆匆过客，而有的人则会在你的心中留下深深的印记。</p>
+<p>　　好久不曾联系，偶然间通了音信，居然熟络的一如当年，时间未曾疏远了些许。“喂，XXX吗？我是XXX。”，“哦，我知道，我X你大爷。”，男人与男人之间，就是这么简单随意。</p>
+<p>　　我和他初三那会儿是同班，很不凑巧的是同桌。当时我们班主任比较开放，排位置的时候让我们自己选座位，当然成绩好的先选，已选的位子标记一下。轮到我的时候，从小就是个选择困难症患者，墨迹了半天，结果老师不耐烦了，说：“好啦，我来帮你选。”，结果后来才知道老班把最后剩下的一个没人要的位子给我了，哭。然后公布座位表的那天，我一看座位表头都大了，居然是第一排紧贴着老师讲桌那个座位，完蛋了，没法上课开小差什么的了。然后一看同桌，A君，知道有这号人存在，不了解，罢罢，算我倒霉。我坐下后，还在纠结第一排的事情，结果他瞟了我一眼，“我是XXX，不喜欢和笨的人来往，别烦我。”，我瞬间给噎的不知道该怎么回，我看起来有那么笨？等我想了半天终于想好了该怎么反击的时候，好家伙，他居然开始呼起来了，我去，同桌是个极品。</p>
+<p>　　然后，就是平平淡淡的日常，刚开始他倒是挺老实的，虽不认真听，但也就走走神画画小人什么的。一个星期后狐狸尾巴终于露出来了，英语课，书一架，直接开始看小说书了，你当老师瞎啊，就在眼皮子底下怎么可能看不到，我心想有好戏看了，结果老师居然不闻不问。他一看老师不管，更嚣张，挡也不档了，直接拿到书桌上开看，还边看边写写画画，不知道的人可能还以为这小子学习好认真啊。我心想，这也太不公平了，成绩好就能为非作歹么，无奈我是个半吊子，学来学去成绩也不见起色。</p>
+<p>　　他脑袋瓜子确实聪明，据他自己吹嘘IQ125，我心想好嘛翻倍正好250，很符合你的个性。他那时候成绩从来没掉出过前五，但是你要说是也像那些女生那样认认真真学取得这样的成绩也就算了，关键是他毛都没学啊，上课不听，下课不做作业，考前不复习，没事还和老师顶一下，天天耷拉个拖鞋，有次考试居然连笔都没带，还是我借给他的。这种存在简直就是啪啪啪的打我们这些个吭哧吭哧学的笨蛋的脸啊，当时小心眼各种羡慕嫉妒恨。</p>
+<p>　　他从那次看小说之后越发嚣张，不知道从哪里搞来了一个步步高电子词典，下了一个叫什么三国霸业的游戏，玩的不亦乐乎。后来又弄了套卡牌，自己和自己打着玩，我都看呆掉了，真乃神人耶。他对我的态度也从最初的爱理不理慢慢的发生转变，我请教他问题他也会大笔一挥提点一番，我每次请教他问题都会有一种莫名的屈辱感，哼，聪明就了不起啊，有时候他画的实在太简洁我就不得不厚脸皮再多问问，结果他就用一种同情看智障的眼光看着我，看得我也不好意思再问，整的一肚子火只好趁其不在猛踹几下他凳子桌子什么的。</p>
+<p>　　后来可能他玩的可能实在太腻歪了，一天午休时候，他玩他的，我睡我的，突然猛的给了我一肘子，我差点没蹦起来。正准备发作，他对我甩了甩电子词典，“要玩吗？”，玩你大爷啊，老子气得要死，忍着没骂出去。然后我又趴桌子上睡了，结果好家伙，又是一肘子，得得得，大哥，你牛x还不行吗，我玩，我玩。然后就接过来开始玩，由于之前从来没玩过，所以什么也不懂，然后他就给我介绍起来，什么要屯兵、和谁联合打谁、打曹操一打一个准，因为曹操粮草带的总不多（设计这游戏的是弱智么）、谁该招降招降该剁了剁了，还给我总结了一套发展不如去抢的理论，然后还时不时的骂一句怎么这么笨，这都能打不过。然后我就给他带坑里去了，上课也开始偷偷摸摸看小说玩游戏什么的，每天都过着偷鸡摸狗良心被谴责的日子，后来和他聊这事情，他大大咧咧的和我说，没事，你以前就是因为学的太多了，脑子给学不灵活了，我这带你打通脑部筋脉血络，你放心，成绩一定不会下降，说不定还能上升呢。年少无知的我，居然信了，信了，然后每天也跟他一样吊儿郎当的，由于是初三毕业班，大家都很认真，就我们俩异类，然后就被戏称为“混子二人组”，他那是被人戏称，我那是实打实的混日子。结果到期中考试后，我哭了。</p>
+<p>　　他还是前五，我就惨了，直接快倒数了，老班直接找到我说“XXX，你别和XXX学啊，他那么聪明，你那么笨，blablabla”，老师这么一说我哭的更凶了。老班安慰半天，完了跟我嘱咐，以后上课认真听讲，别看小人书玩游戏什么的，还有时间加把劲可以的。我赶紧谢过。回班后他一看我这惨样，忍着笑说，你以后别玩我的游戏机和看我的书了，认真学习吧笨蛋。</p>
+<p>　　自那以后我是没再看小说书和玩游戏，不过和他聊天吹牛什么的还是有的，我也了解到了他的人生观价值观以及今后的追求。对于一个人生观、价值观尚在形成，人生目标什么的完全没有的小白来说，遇到一个这么三观正、有理想的小青年，简直崇拜的不要不要的。他那种散漫、闲适的生活方式与追求也深刻影响到了我后来的种种选择，称之为导师不为过。</p>
+<p>　　他也把很多东西传染给了我，火影是他带我入坑的，虽然他现在已经不看了。在此之前我也就知道一个百变小樱什么的，可以说是他带我踏入二次元。科幻小说也是他带我看的，朴树的歌是他带我听的。我那时候从我爸那儿得到一个MP3，那时候可以说是很时髦的，好家伙，给他知道后直接霸占了，我都得找他借，不过也因此听到了不少好歌，当年学校门前小商铺下载歌曲一首都得好几块，我穷的根本下不起歌，人家土豪，一来就是：老板，下满！</p>
+<p>　　我们那时候很巧的是宿舍也在一起，床头对床头，我有时候嫌他脚臭会睡到另一头。记得中考那夜，我失眠了，小小年纪慌得不成样子，不知怎么的居然哭了起来，怕打扰别人休息只能抽抽噎噎，估计他给吵醒了，小声问明白后，不停的安慰我，不要紧什么的，后来我居然就这么迷迷糊糊睡着了。第二天我是精神不错，他就不行了，困困蔫蔫的，现在想来也很是愧疚。</p>
+<p>　　后来中考结束，我很是意外的考取了本校的正取（免学杂费，私立学校当时学费就得好多），但是还是很矫情的在家人面前哭了一鼻子，以示自己没做到最好，然后背地里偷着乐。他好像没怎么考好，不知是不是因为那晚没睡好的缘故，后来他选择去了公家的县立中学，我知道后互道了一声珍重再见，却不知这一别竟是近十年的鸿沟。虽在同一个小城，可高中后课务繁忙，而且两校之间互有门禁，也就没再联系。高中毕业后，去了不同的大学，更没有联系。大学毕业后他南下闯荡，我读研，距离越来越远。</p>
+<p>　　虽过去了近十年，可那些事情、那些话却未曾淡忘了半分。</p>
+<p>　　前些天联系，我半开玩笑的说要去找他蹭饭，这顿饭我蹭定了什么的，然后他爽快的说，行，没问题。</p>
+<p>　　得此良友，足矣。</p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;　　我们这一辈子或许会遇到很多的人，有的人注定是匆匆过客，而有的人则会在你的心中留下深深的印记。&lt;/p&gt;
+&lt;p&gt;　　好久不曾联系，偶然间通了音信，居然熟络的一如当年，时间未曾疏远了些许。“喂，XXX吗？我是XXX。”，“哦，我知道，我X你大爷。”，男人与男人之间，就是这么简
+    
+    </summary>
+    
+      <category term="琐事物语" scheme="http://jrhu05.github.io/categories/%E7%90%90%E4%BA%8B%E7%89%A9%E8%AF%AD/"/>
+    
+    
+      <category term="朋友" scheme="http://jrhu05.github.io/tags/%E6%9C%8B%E5%8F%8B/"/>
     
   </entry>
   
@@ -1164,36 +1271,6 @@ public class CharacterRecongnition {
     
     
       <category term="最近点对" scheme="http://jrhu05.github.io/tags/%E6%9C%80%E8%BF%91%E7%82%B9%E5%AF%B9/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>分治与递归</title>
-    <link href="http://jrhu05.github.io/post/divideAndConquer-part1.html"/>
-    <id>http://jrhu05.github.io/post/divideAndConquer-part1.html</id>
-    <published>2015-04-20T02:51:08.000Z</published>
-    <updated>2015-05-07T09:03:12.000Z</updated>
-    
-    <content type="html"><![CDATA[<p>　　上周学习了分治与递归的初步，莫名的有种递归恐惧感。自己调自己什么的，高中那会儿学VB学到递归的时候就觉得不正常，后来自己写代码的时候也是能不用递归就不用。</p>
-<p>　　分治，没学过感觉好高大上啊，结果英文一来divide and conquer，字表其意，翻译也是屌，分而治之。</p>
-<p>　　上节课主要涉及到了汉诺塔、快排、fibonacci数列什么的，实现一下。</p>
-<p>　　经典的汉诺塔：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line">import java.util.Scanner;</span><br><span class="line"></span><br><span class="line">/**</span><br><span class="line"> * 汉诺塔问题的简单实现</span><br><span class="line"> * @author jrhu05</span><br><span class="line"> *</span><br><span class="line"> */</span><br><span class="line">public class HanoiTower &#123;</span><br><span class="line">	public static void main(String[] args) &#123;</span><br><span class="line">		System.out.println(&quot;input the N:&quot;);</span><br><span class="line">		Scanner cin=new Scanner(System.in);</span><br><span class="line">		int n=cin.nextInt();</span><br><span class="line">		hanoi(n, &apos;A&apos;, &apos;B&apos;, &apos;C&apos;);</span><br><span class="line">	&#125;</span><br><span class="line">	//解决的问题是将i个盘子从A移到C</span><br><span class="line">	static void hanoi(int i,char A, char B,char C)&#123;</span><br><span class="line">		if (i==1) &#123;</span><br><span class="line">			move(i, A, C);</span><br><span class="line">		&#125;else &#123;</span><br><span class="line">			hanoi(i-1, A, C, B);</span><br><span class="line">			move(i, A, C);</span><br><span class="line">			hanoi(i-1, B, A, C);</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	static void move(int i,char x, char y)&#123;</span><br><span class="line">		System.out.println(i+&quot; from &quot;+x+&quot; to &quot;+y);</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<p>　　快速排序：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">import java.util.Arrays;</span><br><span class="line"></span><br><span class="line">/**</span><br><span class="line"> * 快排的手动实现</span><br><span class="line"> * 以及快排的改进（随机化版本）的实现</span><br><span class="line"> * @author jrhu05</span><br><span class="line"> *</span><br><span class="line"> */</span><br><span class="line">public class QuickSort &#123;</span><br><span class="line">	public static void main(String[] args) &#123;</span><br><span class="line">		int[] a=&#123;2,8,7,1,3,5,6,4&#125;;</span><br><span class="line">		quickSort(a, 0, a.length-1);</span><br><span class="line">		System.out.println(Arrays.toString(a));</span><br><span class="line">	&#125;</span><br><span class="line">	static void quickSort(int[] A,int p,int r)&#123;</span><br><span class="line">		if (p&lt;r) &#123;</span><br><span class="line">			int q=partition(A, p, r);</span><br><span class="line">			quickSort(A, p, q-1);</span><br><span class="line">			quickSort(A, q+1, r);</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	static int partition(int[] A, int p, int r)&#123;</span><br><span class="line">		int x=A[r];//把最后一个元素设为主元</span><br><span class="line">		int i=p-1;</span><br><span class="line">		for(int j=p;j&lt;=r-1;j++)&#123;</span><br><span class="line">			if (A[j]&lt;=x) &#123;</span><br><span class="line">				i++;</span><br><span class="line">				int temp=A[i];</span><br><span class="line">				A[i]=A[j];</span><br><span class="line">				A[j]=temp;</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;</span><br><span class="line">		int temp=A[i+1];</span><br><span class="line">		A[i+1]=A[r];</span><br><span class="line">		A[r]=temp;</span><br><span class="line">		return i+1;</span><br><span class="line">	&#125;</span><br><span class="line">	</span><br><span class="line">	static void randomQuickSort(int[] A,int p,int r)&#123;</span><br><span class="line">		if (p&lt;r) &#123;</span><br><span class="line">			int q=randomPartition(A, p, r);</span><br><span class="line">			randomQuickSort(A, p, q-1);</span><br><span class="line">			randomQuickSort(A, q+1, r);</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	</span><br><span class="line">	static int randomPartition(int[] A, int p, int r)&#123;</span><br><span class="line">		int randomMain=(int)(Math.random()*r);</span><br><span class="line">		int x=A[randomMain];//随机一个元素设为主元</span><br><span class="line">		int i=p-1;</span><br><span class="line">		for(int j=p;j&lt;=r-1;j++)&#123;</span><br><span class="line">			if (A[j]&lt;=x) &#123;</span><br><span class="line">				i++;</span><br><span class="line">				int temp=A[i];</span><br><span class="line">				A[i]=A[j];</span><br><span class="line">				A[j]=temp;</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;</span><br><span class="line">		int temp=A[i+1];</span><br><span class="line">		A[i+1]=A[randomMain];</span><br><span class="line">		A[randomMain]=temp;</span><br><span class="line">		return i+1;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<p>　　　Fibonacci数列的非递归实现（o(n)）：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line">import java.util.Scanner;</span><br><span class="line"></span><br><span class="line">/**</span><br><span class="line"> * 斐波那契数列的自底向上非递归算法</span><br><span class="line"> * @author jrhu05</span><br><span class="line"> *</span><br><span class="line"> */</span><br><span class="line">public class Fibonacci &#123;</span><br><span class="line">	public static void main(String[] args) &#123;</span><br><span class="line">		System.out.println(&quot;input the N:&quot;);</span><br><span class="line">		Scanner cin=new Scanner(System.in);</span><br><span class="line">		int n=cin.nextInt();</span><br><span class="line">		int[] fibonacci=new int[n];</span><br><span class="line">		fibonacci[0]=fibonacci[1]=1;</span><br><span class="line">		System.out.println(fibonacci(n, fibonacci));</span><br><span class="line">	&#125;</span><br><span class="line">	</span><br><span class="line">	static int fibonacci(int index, int[] fibonacci)&#123;</span><br><span class="line">		if (index==1||index==2) &#123;</span><br><span class="line">			return 1;</span><br><span class="line">		&#125;else &#123;</span><br><span class="line">			for (int i = 2; i &lt; fibonacci.length; i++) &#123;</span><br><span class="line">			fibonacci[i]=fibonacci[i-1]+fibonacci[i-2];</span><br><span class="line">			&#125;</span><br><span class="line">			return fibonacci[index-1];</span><br><span class="line">		&#125;</span><br><span class="line">		</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<p>   下节课继续是分治，问题是经典的最近点对问题，下周继续。</p>
-]]></content>
-    
-    <summary type="html">
-    
-      &lt;p&gt;　　上周学习了分治与递归的初步，莫名的有种递归恐惧感。自己调自己什么的，高中那会儿学VB学到递归的时候就觉得不正常，后来自己写代码的时候也是能不用递归就不用。&lt;/p&gt;
-&lt;p&gt;　　分治，没学过感觉好高大上啊，结果英文一来divide and conquer，字表其意，翻译也是
-    
-    </summary>
-    
-      <category term="算法寻径" scheme="http://jrhu05.github.io/categories/%E7%AE%97%E6%B3%95%E5%AF%BB%E5%BE%84/"/>
-    
-    
-      <category term="快速排序" scheme="http://jrhu05.github.io/tags/%E5%BF%AB%E9%80%9F%E6%8E%92%E5%BA%8F/"/>
     
   </entry>
   

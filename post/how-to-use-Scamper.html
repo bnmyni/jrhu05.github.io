@@ -5,18 +5,21 @@
 <meta name="baidu-site-verification" content="23nZ3fPmW8" />
   <meta charset="UTF-8">
   
-    <title>安卓手机通讯录 | JerryFu&#39;s Blog</title>
+    <title>利用Scamper工具解析CAIDA trace数据 | JerryFu&#39;s Blog</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=3, minimum-scale=1">
     
     <meta name="author" content="jrhu05">
     
-    <meta name="description" content="这学期安卓嵌入式课程最后要做一个小的通讯录程序，要求能实现从手机导入数据，可以增删改查，可以打电话、发短信，还要提供模糊搜索的功能。倒腾半天，最后倒腾出来一个挫不拉几的手机通讯录，基本上涉及到了数据库的一些操作，模糊搜索使用AutoCompleteTextView来做的，如有想学习一下数据库基本操作">
+    <meta name="description" content="首先，需要到http://www.caida.org/tools/measurement/scamper/网站下载工具的源码。
+下载源码后，将源码复制到Linux系统下，准备编译。
+打开linux命令行终端，定位到源码目录下，可以发现源码文件下有一个configure文件。
+命令行终端下，输入./c">
     
     
     
     <meta name="twitter:card" content="summary" />
     <meta name="twitter:site" content="jrhu05" />
-    <meta name="twitter:title" content="安卓手机通讯录 | JerryFu&#39;s Blog" />
+    <meta name="twitter:title" content="利用Scamper工具解析CAIDA trace数据 | JerryFu&#39;s Blog" />
       
     
     
@@ -77,15 +80,15 @@
 		<header class="article-info clearfix">
   <h1 itemprop="name">
     
-      <a href="/post/android-contact.html" title="安卓手机通讯录" itemprop="url">安卓手机通讯录</a>
+      <a href="/post/how-to-use-Scamper.html" title="利用Scamper工具解析CAIDA trace数据" itemprop="url">利用Scamper工具解析CAIDA trace数据</a>
   </h1>
   <p class="article-author">By
     
       <a href="https://plus.google.com/116290701921732560000?rel=author" title="jrhu05" target="_blank" itemprop="author">jrhu05</a>
     </p>
   <p class="article-time">
-    <time datetime="2015-01-20T07:18:20.000Z" itemprop="datePublished">Jan 20 2015</time>
-    更新日期:<time datetime="2015-01-20T07:53:24.000Z" itemprop="dateModified">Jan 20 2015</time>
+    <time datetime="2016-09-03T15:35:04.000Z" itemprop="datePublished">Sep 3 2016</time>
+    更新日期:<time datetime="2016-09-03T15:55:38.000Z" itemprop="dateModified">Sep 3 2016</time>
     
   </p>
 </header>
@@ -97,24 +100,93 @@
 		
 		</div>
 		
-		<p>　　这学期安卓嵌入式课程最后要做一个小的通讯录程序，要求能实现从手机导入数据，可以增删改查，可以打电话、发短信，还要提供模糊搜索的功能。倒腾半天，最后倒腾出来一个挫不拉几的手机通讯录，基本上涉及到了数据库的一些操作，模糊搜索使用AutoCompleteTextView来做的，如有想学习一下数据库基本操作和相关的电话与短信控制的筒子们可以参考一下，界面设计就不要吐槽了。</p>
-<p>　　下面直接上图：<br>　　初始界面</p>
-<p><img src="/img/android-contact/1.jpg" alt=""></p>
-<p>　　<br>　　导入数据后</p>
-<p><img src="/img/android-contact/2.jpg" alt=""></p>
-<p>　　对某一个联系人进行操作</p>
-<p><img src="/img/android-contact/3.jpg" alt=""></p>
-<p>　　快速查找</p>
-<p><img src="/img/android-contact/4.jpg" alt=""></p>
-<p>　　Gitcafe地址：<a href="https://gitcafe.com/jrhu05/androidContact" target="_blank" rel="external">https://gitcafe.com/jrhu05/androidContact</a></p>
-<p>　　欢迎有爱clone！</p>
+		<ol>
+<li>首先，需要到<a href="http://www.caida.org/tools/measurement/scamper/" target="_blank" rel="external">http://www.caida.org/tools/measurement/scamper/</a>网站下载工具的源码。</li>
+<li>下载源码后，将源码复制到Linux系统下，准备编译。</li>
+<li>打开linux命令行终端，定位到源码目录下，可以发现源码文件下有一个configure文件。</li>
+<li>命令行终端下，输入./configure。</li>
+<li>命令行终端下，输入make。</li>
+<li>命令行终端下，输入make install。</li>
+<li>至此，编译工作就结束了，你可以在usr/local/bin目录下看到编译好的工具。</li>
+<li>直接在命令行终端输入sc_analysis_dump等相应的命令就可以解析文件了。</li>
+<li>一般的解析文件的命令格式为sc_analysis_dump ﬁle1.warts，可用&gt;&gt;输入到指定的文件中，实例如：</li>
+</ol>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sc_analysis_dump ﬁle1.warts &gt;&gt; file1.txt</span><br></pre></td></tr></table></figure>
+<p>下面附上详细使用说明：</p>
+<p>sc_analysis_dump man page: convert scamper traces to something easily parsed with perl</p>
+<p>NAME</p>
+<p>　　sc_analysis_dump—dump of traceroute data in a format that is easily parsed.</p>
+<p>SYNOPSIS</p>
+<p>　　sc_analysis_dump [ −cCdeghHiloprst][ −D debug-count][ −G geo-server]<br>[ −S skip-count][file . ..]</p>
+<p>DESCRIPTION</p>
+<p>　　The sc_analysis_dump utility provides a dump of traceroute data in a format that is easily parsed by<br>scripts. Each line output contains a summary of a single trace, and includes the interfaces visited and the<br>delay of each response. The output format is identical to that of sk_analysis_dump from CAIDA, except that<br>it uses the scamper ﬁle API to read both arts++ ﬁles produced by skitter and warts ﬁles produced by scamper.</p>
+<p>　　The options are as follows:</p>
+<p>　　−c disables printing the cycle number in each line of output.</p>
+<p>　　−C disables printing the comments about the output at the top of the output.</p>
+<p>　　−d disables printing the destination address in each line of output.</p>
+<p>　　−D debug-count</p>
+<p>　　　　for each input ﬁle stop reading after the speciﬁed number of traces.</p>
+<p>　　−e adds the response from the destination to each line of output.</p>
+<p>　　−g use geographical data from netacuity.Not all builds of sc_analysis_dump support this option.</p>
+<p>　　−G geo-server</p>
+<p>　　　　speciﬁes the name of the netacuity server to use.</p>
+<p>　　−h prints a help message and then exits.</p>
+<p>　　−H disables printing the halt ﬁelds: whytraceroute halted and data for that reason.</p>
+<p>　　−i disables printing the RTT to each hop, and howmanytries were required.</p>
+<p>　　−l disables printing the list id in each line of output.</p>
+<p>　　−o prints each line of output using the old format from sk_analysis_dump 1.0.</p>
+<p>　　−p disables print path data in each line of output.</p>
+<p>　　−r disables printing the data associated the response from a destination: the RTT,the TTL of the probe,and the TTL of the response.</p>
+<p>　　−s disables printing the source IP address in each line of output.</p>
+<p>　　−S skip-count</p>
+<p>　　　　skips the deﬁned number of traces from each input ﬁle.</p>
+<p>　　−t disables printing the timestamp of when the traceroute began.</p>
+<p>OUTPUT</p>
+<p>　　There is one trace per line. Fields are separated by a tab character.The output is structured into header ﬁelds<br>(2 to 6), reply ﬁelds (7 to 10) corresponding to the response receivedfrom the destination, halt ﬁelds (11 and<br>12), and hop ﬁelds (beginning at index13).</p>
+<p>1.Key</p>
+<p>　　Indicates the type of line and determines the meaning of the remaining ﬁelds. This will always be ’T’ for an IP trace.<br>FreeBSD 8.2 October 15, 2010 1SC_ANALYSIS_DUMP (1) FreeBSD General Commands Manual SC_ANALYSIS_DUMP (1)</p>
+<p>2.Source</p>
+<p>　　Source IP of skitter/scamper monitor performing the trace.</p>
+<p>3.Destination </p>
+<p>　　Destination IP being traced.</p>
+<p>4.ListId</p>
+<p>　　ID of the destination list containing this destination address. This value will be zero if no list ID<br>wasprovided. A ListId is a 32 bit unsigned integer.</p>
+<p>5.CycleId</p>
+<p>　　ID of current probing cycle. A cycle is a single run through a givenlist. A CycleId is a 32 bit<br>unsigned integer.For skitter traces, cycle IDs will be equal to or slightly earlier than the time-<br>stamp of the ﬁrst trace in each cycle. There is no standard interpretation for scamper cycle IDs.</p>
+<p>　　This value will be zero if no cycle ID was provided.</p>
+<p>6.Timestamp</p>
+<p>　　Timestamp when trace begantothis destination.</p>
+<p>7.DestReplied</p>
+<p>　　Whether a response from the destination was received. The character R is printed if a reply was<br>received. The character N is printed if no reply was received. Since skitter sends a packet with a<br>TTL of 255 when it halts probing, it is still possible for the ﬁnal destination to send a reply and<br>for the HaltReasonData (see below) to not equal no_halt. Note: scamper does not perform this<br>last-ditch probing at TTL 255 by default.</p>
+<p>8.DestRTT</p>
+<p>　　The RTT (ms) of ﬁrst response packet from destination. This value is zero if DestReplied is N.</p>
+<p>9.RequestTTL</p>
+<p>　　TTL set in request packet which elicited a response (echo reply) from the destination. This value<br>is zero if DestReplied is N.</p>
+<p>10.ReplyTTL</p>
+<p>　　TTL found in reply packet from destination. This value is zero if DestReplied is N.</p>
+<p>11.HaltReason</p>
+<p>　　Asingle character corresponding to the reason, if any, why incremental probing stopped. Sis<br>printed if the destination was reached or there is no halt data. Uisprinted if an ICMP unreach-<br>able message was received. L is printed if a loop was detected. Gisprinted if the gaplimit was<br>reached.</p>
+<p>12.HaltReasonData</p>
+<p>　　Extra data about whyprobing halted. If HaltReason is S, the zero is output. If HaltReason is U,<br>the ICMP code of the unreachable message is printed. If HaltReason is L, the length of the loop<br>is printed. If HaltReason is G, the length of the gap is printed.</p>
+<p>13.PathComplete</p>
+<p>　　Whether all hops to destination were found. Cisprinted if the trace is complete, all hops are<br>found. I is printed if the trace is incomplete, at least one hop is missing (i.e., did not respond).<br>FreeBSD 8.2 October 15, 2010 2SC_ANALYSIS_DUMP (1) FreeBSD General Commands Manual SC_ANALYSIS_DUMP (1)</p>
+<p>14.PerHopData</p>
+<p>　　Response data for each hop. If multiple IP addresses respond at the same hop, response data for<br>each IP address are separated by semicolons:<br>IP,RTT,numTries (for only one responding IP) IP,RTT,numTries;IP,RTT,numTries;… (for multiple<br>responding IPs)<br>where IP is the IP address which sent a TTL expired packet, RTT is the RTT of the TTL expired<br>packet, and numTries is the number of tries before a response was receivedfrom the TTL.</p>
+<p>　　This ﬁeld has the value ’q’ if there was no response at a hop.</p>
+<p>EXAMPLES</p>
+<p>　　The command:  </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sc_analysis_dump ﬁle1.warts ﬁle2.warts</span><br></pre></td></tr></table></figure>
+<p>will decode and print the traceroute objects in ﬁle1.warts, followed by the traceroute objects in ﬁle2.warts.</p>
+<p>　　The command:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">gzcat ﬁle1.warts.gz | sc_analysis_dump</span><br></pre></td></tr></table></figure>
+<p>will decode and print the traceroute objects in the uncompressed ﬁle supplied on stdin.</p>
   
 	</div>
 		<footer class="article-footer clearfix">
 
   <div class="article-tags">
   
-  <span></span> <a href="/tags/手机通讯录/">手机通讯录</a>
+  <span></span> <a href="/tags/CAIDA/">CAIDA</a><a href="/tags/Scamper/">Scamper</a><a href="/tags/traceRoute/">traceRoute</a>
   </div>
 
 
@@ -155,19 +227,11 @@
 	
 <nav class="article-nav clearfix">
  
- <div class="prev" >
- <a href="/post/plane-game.html" title="Plane game">
-  <strong>PREVIOUS:</strong><br/>
-  <span>
-  Plane game</span>
-</a>
-</div>
-
 
 <div class="next">
-<a href="/post/search-engine-for-hexo-with-swiftype.html"  title="利用swiftype为hexo添加站内搜索">
+<a href="/post/pt-bug-fix.html"  title="虎踞龙盘PT站漏洞修复">
  <strong>NEXT:</strong><br/> 
- <span>利用swiftype为hexo添加站内搜索
+ <span>虎踞龙盘PT站漏洞修复
 </span>
 </a>
 </div>
@@ -176,7 +240,7 @@
 
 	
 <!-- 多说评论框 start -->
-	<div class="ds-thread" data-thread-key="post/android-contact.html" data-title="安卓手机通讯录" data-url="http://jrhu05.github.io/post/android-contact.html"></div>
+	<div class="ds-thread" data-thread-key="post/how-to-use-Scamper.html" data-title="利用Scamper工具解析CAIDA trace数据" data-url="http://jrhu05.github.io/post/how-to-use-Scamper.html"></div>
 <!-- 多说评论框 end -->
 <!-- 多说公共JS代码 start (一个网页只需插入一次) -->
 <script type="text/javascript">
