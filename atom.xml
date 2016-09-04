@@ -123,66 +123,6 @@
   </entry>
   
   <entry>
-    <title>虎踞龙盘PT站漏洞修复</title>
-    <link href="http://jrhu05.github.io/post/pt-bug-fix.html"/>
-    <id>http://jrhu05.github.io/post/pt-bug-fix.html</id>
-    <published>2016-08-28T04:10:04.000Z</published>
-    <updated>2016-08-28T04:29:14.000Z</updated>
-    
-    <content type="html"><![CDATA[<p>虎踞龙盘PT站是东南大学虎踞龙盘BBS下属的PT站，面向东南大学学子开放。于2010年11月正式运行，主要提供东 南大学内部学生下载娱乐资源，学习资源，是校内继ftp共享资源系统之后重要的共享平台。当前注册人数已达到8,558人，tracker同伴数维持在30000左右，种子数11,402，总种子为53.199 TB，下载量为40TB，总数据量为2.378 PB（截止到2012年1月8日）。当前虎踞龙蟠PT在站务组的精心维护下已经成为南京高校中重要的PT下载网站。东南大学学生可以通过BBS账号直接登录虎踞龙盘PT站下载共享资源。我也有去下载不少东西，下载速度刷刷的，经常是15MB/s+，是的，你没看错，是MB。</p>
-<p>不过在使用的过程中，也发现了一些漏洞，有大有小，其中有的无伤大雅，有的则比较严重。现挑选两个比较严重的漏洞进行详细介绍，供类似的PT站或者PHP开发人员学习交流。</p>
-<p>以下提及的所有漏洞本人均已联系虎踞龙盘PT站的管理组，并进行了修复工作，大家别再尝试了，笑。<br>下面正式开始，懒得再写了，直接贴PT bug fix report里的内容了。</p>
-<h1 id="PT-bug-fix-report"><a href="#PT-bug-fix-report" class="headerlink" title="PT bug fix report"></a>PT bug fix report</h1><h2 id="Ⅰ-随机获取passkey漏洞"><a href="#Ⅰ-随机获取passkey漏洞" class="headerlink" title="Ⅰ. 随机获取passkey漏洞"></a>Ⅰ. 随机获取passkey漏洞</h2><p>1.存在漏洞页面：</p>
-<p>/pt/download.php</p>
-<p>2.问题描述：</p>
-<p>使用32个0（其实任意长度的0都一样）作为passkey（非法passkey），能够正常下载资源，上传下载量计算在某中枪的特定用户账号上. </p>
-<p>可用以下链接进行测试</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">http://bbs.seu.edu.cn/pt/download.php?id= 16580&amp;passkey=00000000000000000000000000000000</span><br></pre></td></tr></table></figure>
-<p>下面给出我测试的图</p>
-<p><img src="/img/pt-bug-fix/evidence1.png" alt=""></p>
-<p><img src="/img/pt-bug-fix/evidence2.png" alt=""></p>
-<p><img src="/img/pt-bug-fix/evidence3.png" alt=""></p>
-<p><img src="/img/pt-bug-fix/evidence4.png" alt=""></p>
-<p>如上图所示，我成功下载了一个种子并且正常的进行了下载，而流量算到了倒霉的gfan用户头上。而且更严重的是，我获取到了他的passkey（种子里有），这样我以后下载任何东西就可以直接用他的passkey构造一个合法的请求来获得种子，可怕。</p>
-<p>3.问题原因：<br>以上述为例，原download.php处理页面提交上述get参数后，得到的mysql查询语句是</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">SELECT * FROM users WHERE passkey=00000000000000000000000000000000 LIMIT 1</span><br></pre></td></tr></table></figure>
-<p>是的，你没看错，没加单引号，原来代码就是这样写的。当然如果这样查询一些正常的passkey的话，也没问题。关键就是如果恶意提交多个0的话，上述语句就变成了：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">SELECT * FROM users WHERE passkey=00000000000000000000000000000000 LIMIT 1</span><br></pre></td></tr></table></figure>
-<p>等同于</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">SELECT * FROM users WHERE passkey=0 LIMIT 1</span><br></pre></td></tr></table></figure>
-<p>进一步等同于</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">SELECT * FROM users WHERE passkey=FALSE LIMIT 1</span><br></pre></td></tr></table></figure>
-<p>而就mysql数据库而言，对于varchar型数据只有字符串“1”是认为布尔值为true，其余所有的字符串数据均认为布尔值是false（很奇怪是不，我也这么觉得）</p>
-<p>这样的话整个库中所有passkey字段值不为“1”的记录全部被select出，而检出结果就是非空，满足了if (!$user)的条件，后续操作得以正常进行。</p>
-<p>4.修复方法：</p>
-<p>简单点可以直接补上单引号，限定为字符串型数据，即这样：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&quot;SELECT * FROM users WHERE passkey=&apos;&quot;. sqlesc($passkey).&quot;&apos; LIMIT 1&quot;;</span><br></pre></td></tr></table></figure>
-<p>高大上一点，可以用php自带的过滤函数（原sqlesc过滤考虑的不周全）mysql_real_escape_string来替换，直接把0这样的特殊字符给过滤掉。</p>
-<h2 id="Ⅱ-POST注入漏洞"><a href="#Ⅱ-POST注入漏洞" class="headerlink" title="Ⅱ. POST注入漏洞"></a>Ⅱ. POST注入漏洞</h2><p>1.存在漏洞页面：</p>
-<p>/pt/thanks.php</p>
-<p>2.问题描述：</p>
-<p>存在POST注入漏洞，可以进行mysql注入攻击. 测试提交post数据 “-1 union select version()&gt;4”.</p>
-<p>3.问题原因：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">//thanks.php</span><br><span class="line">if ($_GET[&apos;id&apos;])</span><br><span class="line"> stderr(&quot;Party is over!&quot;, &quot;This trick doesn&apos;t work anymore. You need to click the button!&quot;);</span><br><span class="line">$userid = $CURUSER[&quot;id&quot;];</span><br><span class="line">$torrentid = $_POST[&quot;id&quot;];</span><br><span class="line">$tsql = sql_query(&quot;SELECT owner FROM torrents where id=$torrentid&quot;);</span><br><span class="line">$arr = mysql_fetch_array($tsql);</span><br></pre></td></tr></table></figure>
-<p>很明显，只对get数据进行了处理，而没有处理POST数据。</p>
-<p>4.修复方法：</p>
-<p>对post数据进行处理。</p>
-]]></content>
-    
-    <summary type="html">
-    
-      &lt;p&gt;虎踞龙盘PT站是东南大学虎踞龙盘BBS下属的PT站，面向东南大学学子开放。于2010年11月正式运行，主要提供东 南大学内部学生下载娱乐资源，学习资源，是校内继ftp共享资源系统之后重要的共享平台。当前注册人数已达到8,558人，tracker同伴数维持在30000左右，种
-    
-    </summary>
-    
-      <category term="网络安全" scheme="http://jrhu05.github.io/categories/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8/"/>
-    
-    
-      <category term="PT站漏洞" scheme="http://jrhu05.github.io/tags/PT%E7%AB%99%E6%BC%8F%E6%B4%9E/"/>
-    
-  </entry>
-  
-  <entry>
     <title>安全感</title>
     <link href="http://jrhu05.github.io/post/safety-feeling.html"/>
     <id>http://jrhu05.github.io/post/safety-feeling.html</id>
@@ -1271,6 +1211,36 @@ public class CharacterRecongnition {
     
     
       <category term="最近点对" scheme="http://jrhu05.github.io/tags/%E6%9C%80%E8%BF%91%E7%82%B9%E5%AF%B9/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>分治与递归</title>
+    <link href="http://jrhu05.github.io/post/divideAndConquer-part1.html"/>
+    <id>http://jrhu05.github.io/post/divideAndConquer-part1.html</id>
+    <published>2015-04-20T02:51:08.000Z</published>
+    <updated>2015-05-07T09:03:12.000Z</updated>
+    
+    <content type="html"><![CDATA[<p>　　上周学习了分治与递归的初步，莫名的有种递归恐惧感。自己调自己什么的，高中那会儿学VB学到递归的时候就觉得不正常，后来自己写代码的时候也是能不用递归就不用。</p>
+<p>　　分治，没学过感觉好高大上啊，结果英文一来divide and conquer，字表其意，翻译也是屌，分而治之。</p>
+<p>　　上节课主要涉及到了汉诺塔、快排、fibonacci数列什么的，实现一下。</p>
+<p>　　经典的汉诺塔：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line">import java.util.Scanner;</span><br><span class="line"></span><br><span class="line">/**</span><br><span class="line"> * 汉诺塔问题的简单实现</span><br><span class="line"> * @author jrhu05</span><br><span class="line"> *</span><br><span class="line"> */</span><br><span class="line">public class HanoiTower &#123;</span><br><span class="line">	public static void main(String[] args) &#123;</span><br><span class="line">		System.out.println(&quot;input the N:&quot;);</span><br><span class="line">		Scanner cin=new Scanner(System.in);</span><br><span class="line">		int n=cin.nextInt();</span><br><span class="line">		hanoi(n, &apos;A&apos;, &apos;B&apos;, &apos;C&apos;);</span><br><span class="line">	&#125;</span><br><span class="line">	//解决的问题是将i个盘子从A移到C</span><br><span class="line">	static void hanoi(int i,char A, char B,char C)&#123;</span><br><span class="line">		if (i==1) &#123;</span><br><span class="line">			move(i, A, C);</span><br><span class="line">		&#125;else &#123;</span><br><span class="line">			hanoi(i-1, A, C, B);</span><br><span class="line">			move(i, A, C);</span><br><span class="line">			hanoi(i-1, B, A, C);</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	static void move(int i,char x, char y)&#123;</span><br><span class="line">		System.out.println(i+&quot; from &quot;+x+&quot; to &quot;+y);</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>　　快速排序：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">import java.util.Arrays;</span><br><span class="line"></span><br><span class="line">/**</span><br><span class="line"> * 快排的手动实现</span><br><span class="line"> * 以及快排的改进（随机化版本）的实现</span><br><span class="line"> * @author jrhu05</span><br><span class="line"> *</span><br><span class="line"> */</span><br><span class="line">public class QuickSort &#123;</span><br><span class="line">	public static void main(String[] args) &#123;</span><br><span class="line">		int[] a=&#123;2,8,7,1,3,5,6,4&#125;;</span><br><span class="line">		quickSort(a, 0, a.length-1);</span><br><span class="line">		System.out.println(Arrays.toString(a));</span><br><span class="line">	&#125;</span><br><span class="line">	static void quickSort(int[] A,int p,int r)&#123;</span><br><span class="line">		if (p&lt;r) &#123;</span><br><span class="line">			int q=partition(A, p, r);</span><br><span class="line">			quickSort(A, p, q-1);</span><br><span class="line">			quickSort(A, q+1, r);</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	static int partition(int[] A, int p, int r)&#123;</span><br><span class="line">		int x=A[r];//把最后一个元素设为主元</span><br><span class="line">		int i=p-1;</span><br><span class="line">		for(int j=p;j&lt;=r-1;j++)&#123;</span><br><span class="line">			if (A[j]&lt;=x) &#123;</span><br><span class="line">				i++;</span><br><span class="line">				int temp=A[i];</span><br><span class="line">				A[i]=A[j];</span><br><span class="line">				A[j]=temp;</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;</span><br><span class="line">		int temp=A[i+1];</span><br><span class="line">		A[i+1]=A[r];</span><br><span class="line">		A[r]=temp;</span><br><span class="line">		return i+1;</span><br><span class="line">	&#125;</span><br><span class="line">	</span><br><span class="line">	static void randomQuickSort(int[] A,int p,int r)&#123;</span><br><span class="line">		if (p&lt;r) &#123;</span><br><span class="line">			int q=randomPartition(A, p, r);</span><br><span class="line">			randomQuickSort(A, p, q-1);</span><br><span class="line">			randomQuickSort(A, q+1, r);</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	</span><br><span class="line">	static int randomPartition(int[] A, int p, int r)&#123;</span><br><span class="line">		int randomMain=(int)(Math.random()*r);</span><br><span class="line">		int x=A[randomMain];//随机一个元素设为主元</span><br><span class="line">		int i=p-1;</span><br><span class="line">		for(int j=p;j&lt;=r-1;j++)&#123;</span><br><span class="line">			if (A[j]&lt;=x) &#123;</span><br><span class="line">				i++;</span><br><span class="line">				int temp=A[i];</span><br><span class="line">				A[i]=A[j];</span><br><span class="line">				A[j]=temp;</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;</span><br><span class="line">		int temp=A[i+1];</span><br><span class="line">		A[i+1]=A[randomMain];</span><br><span class="line">		A[randomMain]=temp;</span><br><span class="line">		return i+1;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>　　　Fibonacci数列的非递归实现（o(n)）：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line">import java.util.Scanner;</span><br><span class="line"></span><br><span class="line">/**</span><br><span class="line"> * 斐波那契数列的自底向上非递归算法</span><br><span class="line"> * @author jrhu05</span><br><span class="line"> *</span><br><span class="line"> */</span><br><span class="line">public class Fibonacci &#123;</span><br><span class="line">	public static void main(String[] args) &#123;</span><br><span class="line">		System.out.println(&quot;input the N:&quot;);</span><br><span class="line">		Scanner cin=new Scanner(System.in);</span><br><span class="line">		int n=cin.nextInt();</span><br><span class="line">		int[] fibonacci=new int[n];</span><br><span class="line">		fibonacci[0]=fibonacci[1]=1;</span><br><span class="line">		System.out.println(fibonacci(n, fibonacci));</span><br><span class="line">	&#125;</span><br><span class="line">	</span><br><span class="line">	static int fibonacci(int index, int[] fibonacci)&#123;</span><br><span class="line">		if (index==1||index==2) &#123;</span><br><span class="line">			return 1;</span><br><span class="line">		&#125;else &#123;</span><br><span class="line">			for (int i = 2; i &lt; fibonacci.length; i++) &#123;</span><br><span class="line">			fibonacci[i]=fibonacci[i-1]+fibonacci[i-2];</span><br><span class="line">			&#125;</span><br><span class="line">			return fibonacci[index-1];</span><br><span class="line">		&#125;</span><br><span class="line">		</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>   下节课继续是分治，问题是经典的最近点对问题，下周继续。</p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;　　上周学习了分治与递归的初步，莫名的有种递归恐惧感。自己调自己什么的，高中那会儿学VB学到递归的时候就觉得不正常，后来自己写代码的时候也是能不用递归就不用。&lt;/p&gt;
+&lt;p&gt;　　分治，没学过感觉好高大上啊，结果英文一来divide and conquer，字表其意，翻译也是
+    
+    </summary>
+    
+      <category term="算法寻径" scheme="http://jrhu05.github.io/categories/%E7%AE%97%E6%B3%95%E5%AF%BB%E5%BE%84/"/>
+    
+    
+      <category term="快速排序" scheme="http://jrhu05.github.io/tags/%E5%BF%AB%E9%80%9F%E6%8E%92%E5%BA%8F/"/>
     
   </entry>
   
