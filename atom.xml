@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://jrhu05.github.io/"/>
-  <updated>2016-09-15T15:17:39.000Z</updated>
+  <updated>2016-09-15T15:58:05.000Z</updated>
   <id>http://jrhu05.github.io/</id>
   
   <author>
@@ -16,11 +16,11 @@
   <generator uri="http://hexo.io/">Hexo</generator>
   
   <entry>
-    <title>百度2016校招机试题</title>
-    <link href="http://jrhu05.github.io/post/baidu-2016.html"/>
-    <id>http://jrhu05.github.io/post/baidu-2016.html</id>
+    <title>百度2017校招机试题</title>
+    <link href="http://jrhu05.github.io/post/baidu-2017.html"/>
+    <id>http://jrhu05.github.io/post/baidu-2017.html</id>
     <published>2016-09-16T01:00:37.000Z</published>
-    <updated>2016-09-15T15:17:39.000Z</updated>
+    <updated>2016-09-15T15:58:05.000Z</updated>
     
     <content type="html"><![CDATA[<p>　　前几天实验室几个人都参加了百度的校招，然后同时开始考试，大家很有默契的开始“共享信息”，嘻嘻。然后我没报名，但这不影响我们聊一聊考试题目，当然，还是机试题目。</p>
 <p>　　第一题和第三题都很简单，第一题是矩阵那个，第三题是二叉树的遍历问题，都没啥意思，略。下面说说第二题，很好玩。</p>
@@ -82,11 +82,11 @@
   </entry>
   
   <entry>
-    <title>网易2016校招机试题</title>
-    <link href="http://jrhu05.github.io/post/wangyi-2016.html"/>
-    <id>http://jrhu05.github.io/post/wangyi-2016.html</id>
+    <title>网易2017校招机试题</title>
+    <link href="http://jrhu05.github.io/post/wangyi-2017.html"/>
+    <id>http://jrhu05.github.io/post/wangyi-2017.html</id>
     <published>2016-09-15T01:00:37.000Z</published>
-    <updated>2016-09-15T08:28:13.000Z</updated>
+    <updated>2016-09-15T15:57:45.000Z</updated>
     
     <content type="html"><![CDATA[<p>　　前些天同学参加网易校招，在线答题，前面是选择题，后面是编程题。编程题一共三道，第一道很简单，所以直接跳过。后面两道题目比较有意思，我虽然没有报名参加网易的校招，但是不妨碍我们拿出来说道说道。</p>
 <h1 id="整数圆边点问题"><a href="#整数圆边点问题" class="headerlink" title="整数圆边点问题"></a>整数圆边点问题</h1><p>　　（我自己瞎起的名字）</p>
