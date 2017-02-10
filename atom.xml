@@ -497,167 +497,6 @@
   </entry>
   
   <entry>
-    <title>WorksApplication机试题求解心得</title>
-    <link href="http://jrhu05.github.io/post/worksApplication-character-recognition.html"/>
-    <id>http://jrhu05.github.io/post/worksApplication-character-recognition.html</id>
-    <published>2016-05-31T03:15:33.000Z</published>
-    <updated>2016-05-31T03:29:01.000Z</updated>
-    
-    <content type="html"><![CDATA[<p>　昨晚看完学校的晚会回实验室，发现几个同学在很激烈的讨论问题，然后听到了什么矩阵、特征向量。数学系出身的我一下子就被吸引住了，本着有好玩的就要凑个热闹的心态问了问，原来他们在讨论一道WorksApplication（什么公司？没听说，好像很小的样子）的机试题，好像已经讨论了蛮长时间，然后说用什么很高大上的01字典树（我打的对的吧？），感觉好牛逼好屌的样子，结果一看题目，嗨，什么嘛。</p>
-<p>　　把题目扒下来给你们瞧瞧：</p>
-<p>Character Recognition</p>
-<p>Description</p>
-<p>Character recognition is the conversion of images into text. For now we consider each character in the picture is a N*M matrix with only zeros and ones, and we need to recognize K characters. You are to write a program to find minimal number of pixels so that we can recognize each character.</p>
-<p>For example, we have only two characters ‘T’ and ‘L’, and the matrix size is 3*3, we can think ‘T’ and ‘L’ are</p>
-<p>111    　　　100</p>
-<p>010    　　　100</p>
-<p>010    　　　111</p>
-<p>so we can recognize the character with only bottom-left pixel, the answer is 1.</p>
-<p>Limits</p>
-<p>•    Memory limit per test: 256 megabytes</p>
-<p>•    Time limit per test: The faster the better</p>
-<p>•    Input</p>
-<p>•    The first line of input is three integers N, M, K (1 &lt;= N, M &lt;= 10, 2 &lt;= K &lt;= 6). Which represents the size of matrix and number of characters. Then is following K blocks, which represents the matrix. Notice that each block starts with a blank line and we guarantee that characters are different.</p>
-<p>•    Output</p>
-<p>•    You should output the minimum number of pixels, which is the answer.</p>
-<p>•    Sample Test</p>
-<p>•    input</p>
-<p>•    2 3 2</p>
-<p>•    </p>
-<p>•    111</p>
-<p>•    010</p>
-<p>•    </p>
-<p>•    100</p>
-<p>•    100</p>
-<p>•    output</p>
-<p>•    1</p>
-<p>　　说白了就是输入若干个同型01矩阵，然后寻找最少的点数来区分这若干个矩阵。我刚开始感觉有点意思，结果越分析越觉着出题目的人是智障，容我慢慢道来。</p>
-<p>　　直接正面入手肯定是不行的，一个个组合即使输入矩阵数目不多那么组合起来也是很可怕的数目，穷举法什么的，最不优雅了。正面不行，咱们反其道而行，你不是找能用来区分的点么，我偏偏不找这些点，我找不能区分的点，我们装B一下称这种点为无用点（useless Point），那么什么样的点是不可用的呢？设想一下集合的交集，两个几个相交的部分一定是不能用来区分两个集合的，因为大家都是一样的嘛，推广一下，也就是说无用点即为所有输入矩阵中值一样的那些个点。剩下就好办了哇，排除掉这些一定不能用的无用点，剩下的点都可以用来当做区别点组的组员，后面2B的事情就来了，根据编码规则，要区别N个矩阵，那么最少需要log N（这里log以2为底，我不知道怎么写下标），那么我们只要判断可用点数目是否大于这个临界值不就行了么，如果大于那么输出log N向上取整的整数，如果小于，说明无法有足够的点来区分，咱就输出个0吧。关键，最最最2B的事情来了，小哥（让我帮忙做题目的同学的绰号）说输入的这些个矩阵一定是可以区分的，那照这样的话我直接输出那个log N向上取整的整数不就可以了么，2333。</p>
-<p>　　关于怎么找出无用点我是这么设计的，设立一个N*M的矩阵（和输入矩阵同型），设该矩阵为NB（嗯，牛B矩阵），然后矩阵中每个元素是一个长度为2的int数组，设为a，a[0]的值表示该矩阵位不同输入矩阵中值为1的个数，a[1] 的值表示该矩阵位不同输入矩阵中值为0的个数，然后顺序扫描各个输入矩阵，分别判断每一位的值，相应的改变NB矩阵中对应的一维数组中的值。随后设立一个值为N*M的数，表示初始可用点数，接着遍历统计NB矩阵中各个位中的一维数组的两个位，只要有一个位的值和输入矩阵个数是一样的，即表明在这个位所有的输入矩阵的值是一样的（或0或1），然后这个点就是无用点，初始可用点数减去1。一轮线性扫描后就得出了可用点个数，然后判断一下就ok了。</p>
-<p>　　我把思路告诉他之后，他说让我帮忙实现（喂喂，有这么厚颜无耻的么，笑），他说他只会py交易，c和java都不大会，然后题目只能用c/c++、java来提交，我没理他。然后他说“请你一顿饭，外加两鸡腿，还有饮料！帮不帮？”，我一听，有鸡腿还有饮料，“帮帮帮！”，然后花了一二十分钟编了出来，我很想直接syso一个log N向上取整的整数啊，可那样有点太二B了，还是老老实实写吧。</p>
-<p>　　然后代码如下，因为输入较小，所以也没做优化，渣代码，且有注释强迫症，轻喷（提交一次通过，accepted）：</p>
-<pre><code>package challenge;
-
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Scanner;
-
-public class CharacterRecongnition {
-    public static void main(String[] args) {
-        Scanner cin = new Scanner(System.in);
-        ArrayList&lt;Object&gt; cubeList=new ArrayList&lt;&gt;();
-        int row=0;
-        int cloum=0;
-        int cubeNumber;
-        String temp=cin.nextLine();
-        String[] tempString=temp.split(&quot; &quot;);
-        int[] need={0,0,0};
-        for (int i=0;i&lt;3;i++) {
-            need[i]=Integer.valueOf(tempString[i]);
-        }
-        row=need[0];
-        cloum=need[1];
-        cubeNumber=need[2];
-        //读入cube
-        for(int i=0;i&lt;cubeNumber;i++){
-            //跳过空行
-            String noUse=cin.nextLine();
-            int[][] tempCube=new int[row][cloum];
-            for(int j=0;j&lt;row;j++){
-                //读入一行
-                String rowString=cin.nextLine();
-                char[] c=rowString.toCharArray();
-                int number=0;
-                //System.out.println(c.length);
-                 for(int m=0;m&lt;c.length;m++){
-                        number =Integer.parseInt(String.valueOf(c[m]));
-                        //System.out.println(number);
-                    }
-                for(int k=0;k&lt;cloum;k++){
-                    tempCube[j][k]=number;
-                }    
-            }
-            //System.out.println(Arrays.deepToString(tempCube));
-            cubeList.add(tempCube);
-        }
-        System.out.println(findSmallestDiff(cubeList));
-    }
-
-    public static int findSmallestDiff(ArrayList&lt;Object&gt; cubeLis) {
-        int cubeNumber=cubeLis.size();
-        int[][] cube1=(int[][]) cubeLis.get(0);
-        //列数
-        int cloum=cube1[0].length;
-        //行数
-        int row=cube1.length;
-        //构造新的牛逼矩阵
-        Object[][] nb=new Object[row][cloum];
-        //遍历同时初始化
-        for(int i=0;i&lt;row;i++){
-            for(int j=0;j&lt;cloum;j++){
-                int[]mark={0,0};
-                nb[i][j]=mark;
-                }
-            }
-
-        //开始逐个处理矩阵
-        for (Object cube : cubeLis) {
-            int[][] tempCube=(int[][]) cube;
-            for(int i=0;i&lt;row;i++){
-                for(int j=0;j&lt;cloum;j++){
-                    int[]mark=(int[]) nb[i][j];
-                    if (tempCube[i][j]==1) {
-                        mark[0]=mark[0]++;
-                    }else{
-                        mark[1]=mark[1]++;
-                    }
-                    //mark还原
-                    nb[i][j]=mark;
-                }
-            }
-        }
-        //处理完毕开始判定
-        int totalMarkPoint=row*cloum;
-        for(int i=0;i&lt;row;i++){
-            for(int j=0;j&lt;cloum;j++){
-                    int[] tempMark=(int[]) nb[i][j];
-                    if (tempMark[0]==cubeNumber||tempMark[1]==cubeNumber) {
-                        totalMarkPoint--;
-                    }
-                }
-            }
-        int border=(int) Math.ceil(log(cubeNumber,2)); 
-        if (totalMarkPoint&gt;border) {
-            return border;
-        }
-
-        return 0;
-    }
-
-        static public double log(double value,double base) {
-                    return Math.log(value) / Math.log(base);
-                }
-}
-</code></pre><p>　　然后今天早上，出于好奇搜了一下，我的妈呀，日本的啊，福利据说不错哇，好像还能免费去日本旅游啊。关键，关键，起薪600w啊，日元也不少啊，折算过来35W多啊，一年顶我两三年啊！！！</p>
-<p>　　他第二题说在网上找到类似的代码了，也过了，这样两道题目全部accept，进面试应该妥妥的了吧。</p>
-<p>　　我怎么觉得我被他一个鸡腿打发了有点亏啊……</p>
-<p>　　我也想去日本玩！我也想去Works Application！我也要拿600w，哼！</p>
-]]></content>
-    
-    <summary type="html">
-    
-      &lt;p&gt;　昨晚看完学校的晚会回实验室，发现几个同学在很激烈的讨论问题，然后听到了什么矩阵、特征向量。数学系出身的我一下子就被吸引住了，本着有好玩的就要凑个热闹的心态问了问，原来他们在讨论一道WorksApplication（什么公司？没听说，好像很小的样子）的机试题，好像已经讨论了
-    
-    </summary>
-    
-      <category term="研究僧呀" scheme="http://jrhu05.github.io/categories/%E7%A0%94%E7%A9%B6%E5%83%A7%E5%91%80/"/>
-    
-    
-      <category term="矩阵区分,算法,worksapplication机试" scheme="http://jrhu05.github.io/tags/%E7%9F%A9%E9%98%B5%E5%8C%BA%E5%88%86-%E7%AE%97%E6%B3%95-worksapplication%E6%9C%BA%E8%AF%95/"/>
-    
-  </entry>
-  
-  <entry>
     <title>友人A</title>
     <link href="http://jrhu05.github.io/post/friendA.html"/>
     <id>http://jrhu05.github.io/post/friendA.html</id>
@@ -1264,6 +1103,76 @@ public class CharacterRecongnition {
       <category term="LCS问题" scheme="http://jrhu05.github.io/tags/LCS%E9%97%AE%E9%A2%98/"/>
     
       <category term="动态规划" scheme="http://jrhu05.github.io/tags/%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>硬件方式破解天翼校园客户端1.5.4</title>
+    <link href="http://jrhu05.github.io/post/jsEsurfing-newVersion-crack.html"/>
+    <id>http://jrhu05.github.io/post/jsEsurfing-newVersion-crack.html</id>
+    <published>2015-05-12T04:37:48.000Z</published>
+    <updated>2015-07-14T00:38:18.000Z</updated>
+    
+    <content type="html"><![CDATA[<p>　　自从上次破解完1.5.2版本后，不久电信就进行了升级，中间我路由器拿到实验室用了，所以也没进行相应的破解升级工作。前几天电信开始频繁掉线，尤其是lol进游戏加载的时候会一直掉，导致我本来就不高的排位一直掉，一怒之下接着破解。</p>
+<p>　　本教程适用于电信天翼校园客户端1.5.4和1.5.5的地区，我所在的苏州地区亲测没有问题。</p>
+<p>　　首先你需要一个改装好的水星155r路由，动手能力强的同学可以买原版的星155r路由回来改装，才40来块钱，要是像我这样的硬件小白可以直接去淘宝上买别人改装好的。下面给个链接：</p>
+<p>　　<a href="http://item.taobao.com/item.htm?spm=a1z09.2.9.28.6HaVYe&amp;id=37833970907&amp;_u=cl66d0vcf3f" target="_blank" rel="external">http://item.taobao.com/item.htm?spm=a1z09.2.9.28.6HaVYe&amp;id=37833970907&amp;_u=cl66d0vcf3f</a></p>
+<p>　　店家默认给刷了个不死uboot。</p>
+<p>　　下面开始刷机教程，刷入的系统是OpenWrt 的稳定版Attitude Adjustment 12.09.1 / LuCI 0.11 Branch内核是3.3.8的，所需要的工具和固件我会打包放在百度盘里，大家可以自行去下载。
+　　</p>
+<p>　　首先设置ip如图</p>
+<p><img src="/img/jsEsurfing-crack/step1.jpg" alt=""></p>
+<p>　　接着进入不死uboot，进入方法：按着reset不放插上电源，等到灯一起闪的时候，清空浏览器缓存，不要用IE。进入192.168.1.1</p>
+<p>　　进入后就可以刷入固件了，待刷入的固件名称是155r.bin</p>
+<p>　　刷入的设置界面如下：</p>
+<p><img src="/img/jsEsurfing-newVersion-crack/different1.jpg" alt=""></p>
+<p>　　耐心等待系统的刷入，刷入后，等灯重新亮起之后，将IP 改回自动获取，进入192.168.1.1.用户名为root默认密码为小写admin，此时你已经成功进入了系统，离成功破解更近了一步。</p>
+<p>　　下面进行pppd文件的写入，安装好winscp后打开，设置界面如下图：</p>
+<p><img src="/img/jsEsurfing-newVersion-crack/different2.jpg" alt=""></p>
+<p>　　密码是：admin，别的和上图都一样，然后点击登录。</p>
+<p>　　把pppd拖到路由root根文件夹下（打开主目录）具体看下图：</p>
+<p><img src="/img/jsEsurfing-crack/step4.jpg" alt=""></p>
+<p>　　上传好的界面如下：</p>
+<p><img src="/img/jsEsurfing-crack/step5.jpg" alt=""></p>
+<p>　　下面安装好putty并打开<br><img src="/img/jsEsurfing-newVersion-crack/different3.jpg" alt=""></p>
+<p>　　填好hostname为192.168.1.1后点击open打开终端</p>
+<p><img src="/img/jsEsurfing-newVersion-crack/different4.jpg" alt=""></p>
+<p>　　输入用户名：root，密码：admin（注意terminal默认是没有密码回显的小心别敲错了），登陆成功后的界面如上图。</p>
+<p>　　在里面输入（可以直接选中再在putty里右击，会自动copy过去的）<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">mv /usr/sbin/pppd /usr/sbin/pppd.bak</span><br><span class="line">cp /root/pppd /usr/sbin/pppd</span><br><span class="line">chmod +x /usr/sbin/pppd</span><br></pre></td></tr></table></figure></p>
+<p>　　其实就是简单的linux命令，第一个是把原来的pppd备份一下，防止有啥问题好用来还原，第二句是把传上去的pppd拷贝到用户目录，最后一句是给pppd加权限，看懂看不懂没啥影响，照着来就可以了。</p>
+<p>　　再次进入192.168.1.1 把wan口的协议改成pppoe，然后保存&amp;应用，如下图：</p>
+<p><img src="/img/jsEsurfing-crack/step8.jpg" alt=""></p>
+<p>　　打开wan口高级设置，取消开机自动运行（把下图的打钩取消掉）。</p>
+<p><img src="/img/jsEsurfing-crack/step9.jpg" alt=""></p>
+<p>　　保存&amp;应用，之后重启一下路由。</p>
+<p>　　再进入路由器，配置一下wan口的基本设置</p>
+<p><img src="/img/jsEsurfing-newVersion-crack/different5.jpg" alt=""></p>
+<p>　　用户名是tyxy#+天翼帐号，比如手机号码 18111111111对应的拨号帐号就是tyxy#18111111111，密码是6小时一换的密码，配置好后点击保存和应用。</p>
+<p>　　然后回到上一级，点击wan的链接：</p>
+<p><img src="/img/jsEsurfing-crack/step11.jpg" alt=""></p>
+<p>　　然后和小伙伴一起享受无拘无束的共享上网吧！</p>
+<p>　　Enjoying it!</p>
+<p>　　本文所需的软件和固件打包下载地址如下：</p>
+<p>　　链接:<a href="http://pan.baidu.com/s/1qWmgyeS" title="破解所需软件" target="_blank" rel="external"> http://pan.baidu.com/s/1qWmgyeS</a> </p>
+<p>　　密码: uc3p</p>
+<p>　　压缩文件解压密码是:www.jerryfu.net</p>
+<p>　　之前忘记有加密这回事了，sorry。</p>
+<p>　　如果链接失效可以直接找我索要。</p>
+<p>　　关于openwrt如何开启无线网和配置无线网的内容过于简单且不再本文讨论范围内，故省略，如有疑问可自行百度。</p>
+<p>　　如需转载，请注明出处，谢谢。</p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;　　自从上次破解完1.5.2版本后，不久电信就进行了升级，中间我路由器拿到实验室用了，所以也没进行相应的破解升级工作。前几天电信开始频繁掉线，尤其是lol进游戏加载的时候会一直掉，导致我本来就不高的排位一直掉，一怒之下接着破解。&lt;/p&gt;
+&lt;p&gt;　　本教程适用于电信天翼校园客
+    
+    </summary>
+    
+      <category term="网络安全" scheme="http://jrhu05.github.io/categories/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8/"/>
+    
+    
+      <category term="电信客户端破解" scheme="http://jrhu05.github.io/tags/%E7%94%B5%E4%BF%A1%E5%AE%A2%E6%88%B7%E7%AB%AF%E7%A0%B4%E8%A7%A3/"/>
     
   </entry>
   
