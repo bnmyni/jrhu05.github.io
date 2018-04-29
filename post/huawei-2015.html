@@ -218,21 +218,21 @@
 
 	
 <!-- 多说评论框 start -->
-	<div class="ds-thread" data-thread-key="post/huawei-2015.html" data-title="华为2015实习生校招机试题" data-url="http://jrhu05.github.io/post/huawei-2015.html"></div>
-<!-- 多说评论框 end -->
-<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
-<script type="text/javascript">
-var duoshuoQuery = {short_name:"jrhu05"};
-	(function() {
-		var ds = document.createElement('script');
-		ds.type = 'text/javascript';ds.async = true;
-		ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
-		ds.charset = 'UTF-8';
-		(document.getElementsByTagName('head')[0] 
-		 || document.getElementsByTagName('body')[0]).appendChild(ds);
-	})();
-	</script>
-<!-- 多说公共JS代码 end -->
+	<div id="tester" class="ds-thread"></div>
+	<link rel="stylesheet" href="https://imsun.github.io/gitment/style/default.css">
+	<script src="https://imsun.github.io/gitment/dist/gitment.browser.js"></script>
+	<script>
+	  var gitment = new Gitment({
+	    id: 'location.href', // 可选。默认为 location.href
+	    owner: 'jrhu05', // 可以是你的GitHub用户名，也可以是github id
+	    repo: 'jrhu05.github.io',
+	    oauth: {
+	      client_id: 'd4e1cb3a18bd480b8868',
+	      client_secret: 'db1cd263bd9472feb955fb5c5c46f6c7ae6c6bcf',
+	    },
+	  })
+	  gitment.render('tester')
+</script>
 
 
 </div>  
