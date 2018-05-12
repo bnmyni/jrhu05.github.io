@@ -89,7 +89,7 @@ J 中的字母不重复，J 和 S中的所有字符都是字母。字母区分�
     </p>
   <p class="article-time">
     <time datetime="2017-04-01T01:00:37.000Z" itemprop="datePublished">Apr 1 2017</time>
-    更新日期:<time datetime="2018-04-29T03:06:52.736Z" itemprop="dateModified">Apr 29 2018</time>
+    更新日期:<time datetime="2018-05-12T01:53:20.188Z" itemprop="dateModified">May 12 2018</time>
     
   </p>
 </header>
@@ -111,7 +111,7 @@ J 中的字母不重复，J 和 S中的所有字符都是字母。字母区分�
 <p><strong>分析</strong></p>
 <p>easy，略</p>
 <p><strong>解答：</strong></p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">_771JewelsAndStones</span> </span>&#123;</span><br><span class="line">	</span><br><span class="line">	<span class="meta">@Test</span></span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">test</span><span class="params">()</span> </span>&#123;</span><br><span class="line">		String j=<span class="string">"z"</span>;</span><br><span class="line">		String s=<span class="string">"ZZ"</span>;</span><br><span class="line">		System.out.println(numJewelsInStones(j, s));</span><br><span class="line">	&#125;</span><br><span class="line">	</span><br><span class="line">	 <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">numJewelsInStones</span><span class="params">(String J, String S)</span> </span>&#123;</span><br><span class="line">		 <span class="keyword">char</span>[] jewels=J.toCharArray();</span><br><span class="line">		 <span class="keyword">char</span>[] stones=S.toCharArray();</span><br><span class="line">		 <span class="keyword">int</span> jewelsNumber=<span class="number">0</span>;</span><br><span class="line">		 <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; jewels.length; i++) &#123;</span><br><span class="line">			<span class="keyword">for</span> (<span class="keyword">int</span> k = <span class="number">0</span>; k &lt; stones.length; k++) &#123;</span><br><span class="line">				<span class="keyword">if</span> (jewels[i]==stones[k]) &#123;</span><br><span class="line">					jewelsNumber++;</span><br><span class="line">				&#125;</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;</span><br><span class="line">	     <span class="keyword">return</span> jewelsNumber;</span><br><span class="line">	 &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> org.junit.Test;</span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">_771JewelsAndStones</span> </span>&#123;</span><br><span class="line">	</span><br><span class="line">	<span class="meta">@Test</span></span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">test</span><span class="params">()</span> </span>&#123;</span><br><span class="line">		String j=<span class="string">"z"</span>;</span><br><span class="line">		String s=<span class="string">"ZZ"</span>;</span><br><span class="line">		System.out.println(numJewelsInStones(j, s));</span><br><span class="line">	&#125;</span><br><span class="line">	</span><br><span class="line">	 <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">numJewelsInStones</span><span class="params">(String J, String S)</span> </span>&#123;</span><br><span class="line">		 <span class="keyword">char</span>[] jewels=J.toCharArray();</span><br><span class="line">		 <span class="keyword">char</span>[] stones=S.toCharArray();</span><br><span class="line">		 <span class="keyword">int</span> jewelsNumber=<span class="number">0</span>;</span><br><span class="line">		 <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; jewels.length; i++) &#123;</span><br><span class="line">			<span class="keyword">for</span> (<span class="keyword">int</span> k = <span class="number">0</span>; k &lt; stones.length; k++) &#123;</span><br><span class="line">				<span class="keyword">if</span> (jewels[i]==stones[k]) &#123;</span><br><span class="line">					jewelsNumber++;</span><br><span class="line">				&#125;</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;</span><br><span class="line">	     <span class="keyword">return</span> jewelsNumber;</span><br><span class="line">	 &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
   
 	</div>
 		<footer class="article-footer clearfix">
@@ -160,10 +160,10 @@ J 中的字母不重复，J 和 S中的所有字符都是字母。字母区分�
 <nav class="article-nav clearfix">
  
  <div class="prev" >
- <a href="/post/dancing-in-the-corner.html" title="在世界的角落起舞">
+ <a href="/post/LeetCode-100SameTree.html" title="LeetCode刷题笔记-100SameTree">
   <strong>PREVIOUS:</strong><br/>
   <span>
-  在世界的角落起舞</span>
+  LeetCode刷题笔记-100SameTree</span>
 </a>
 </div>
 
@@ -220,7 +220,7 @@ J 中的字母不重复，J 和 S中的所有字符都是字母。字母区分�
 		
 			<li><a href="/categories/研究僧呀/" title="研究僧呀">研究僧呀<sup>15</sup></a></li>
 		
-			<li><a href="/categories/算法寻径/" title="算法寻径">算法寻径<sup>34</sup></a></li>
+			<li><a href="/categories/算法寻径/" title="算法寻径">算法寻径<sup>40</sup></a></li>
 		
 			<li><a href="/categories/网络安全/" title="网络安全">网络安全<sup>4</sup></a></li>
 		
