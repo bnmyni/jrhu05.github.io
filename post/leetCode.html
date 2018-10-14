@@ -5,18 +5,19 @@
 <meta name="baidu-site-verification" content="23nZ3fPmW8" />
   <meta charset="UTF-8">
   
-    <title>插入排序与归并排序算法的java实现 | JerryFu&#39;s Blog</title>
+    <title>leetCode刷题笔记 | JerryFu&#39;s Blog</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=3, minimum-scale=1">
     
     <meta name="author" content="jrhu05">
     
-    <meta name="description" content="以前没学过算法课，所以这学期选算法的时候义无反顾的选了“算法二班”，基础班，即菜鸟班。上星期听了次课后感觉老师很不错，很有激情。一开始很多人选算法一班，估计是看选的人比较多吧。结果上完上午的课，下午的时候一大帮一班的人跑到了我们二班，据说一班的老师比较装，用的英文PPT，而且各种“这些你们懂的，我就">
+    <meta name="description" content="leetCode刷题笔记　　本文记录了leetCode刷题过程中的心得体会，每道题目均是以题目、分析、解答的模式给出，题目中复述了该题，分析中针对题目给出了简要的解题思路分析，解答中给出了能够通过的java语言实现的解答。
+　　有事没事就刷上这么一两道，龟速更新中，努力提高自己的算法水平。这个笔记一">
     
     
     
     <meta name="twitter:card" content="summary" />
     <meta name="twitter:site" content="jrhu05" />
-    <meta name="twitter:title" content="插入排序与归并排序算法的java实现 | JerryFu&#39;s Blog" />
+    <meta name="twitter:title" content="leetCode刷题笔记 | JerryFu&#39;s Blog" />
       
     
     
@@ -77,15 +78,15 @@
 		<header class="article-info clearfix">
   <h1 itemprop="name">
     
-      <a href="/post/basic-sort-algorithm.html" title="插入排序与归并排序算法的java实现" itemprop="url">插入排序与归并排序算法的java实现</a>
+      <a href="/post/leetCode.html" title="leetCode刷题笔记" itemprop="url">leetCode刷题笔记</a>
   </h1>
   <p class="article-author">By
     
       <a href="https://plus.google.com/116290701921732560000?rel=author" title="jrhu05" target="_blank" itemprop="author">jrhu05</a>
     </p>
   <p class="article-time">
-    <time datetime="2015-04-16T01:56:31.000Z" itemprop="datePublished">Apr 16 2015</time>
-    更新日期:<time datetime="2015-04-16T02:22:16.000Z" itemprop="dateModified">Apr 16 2015</time>
+    <time datetime="2018-10-14T12:43:06.000Z" itemprop="datePublished">Oct 14 2018</time>
+    更新日期:<time datetime="2018-10-14T12:46:05.523Z" itemprop="dateModified">Oct 14 2018</time>
     
   </p>
 </header>
@@ -94,23 +95,63 @@
 		
 		<div id="toc" class="toc-article">
 			<strong class="toc-title">文章目录</strong>
-		
+		<ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#leetCode刷题笔记"><span class="toc-number">1.</span> <span class="toc-text">leetCode刷题笔记</span></a></li></ol>
 		</div>
 		
-		<p>　　　以前没学过算法课，所以这学期选算法的时候义无反顾的选了“算法二班”，基础班，即菜鸟班。上星期听了次课后感觉老师很不错，很有激情。一开始很多人选算法一班，估计是看选的人比较多吧。结果上完上午的课，下午的时候一大帮一班的人跑到了我们二班，据说一班的老师比较装，用的英文PPT，而且各种“这些你们懂的，我就不解释了”，2333。后来去教务处改被停掉的“网络安全”课时，发现好多人跑去调课，要从一班调到二班，照这样下去别一班因为人太少给砍掉啊，这样我们班一个教室坐那么多人估计得挤得够呛。</p>
-<p>　　　因为算法基础较差，所以听从了老师的建议，准备从头开始，从易到难，把老师每节课讲到的所有的基本算法实现一遍，加深自己的理解。虽然说学数学出身，理解这些算法没啥问题，但是从理解到实现远远没有想的那么简单。就比如这简单的插入排序与归并排序，原理看起来是那么的简单，但是我却花费的足足一上午才实现，而且是在参考了ppt中给出的伪代码的情况下，当然给的c++代码没看。归并排序没有给伪代码，想了半天才照着ppt上的图解一点点的扣完。</p>
-<p>　　　都是些基础的东西，大神就直接跳过吧，给自己留点印记，希望能给和我一样的菜鸟们一点帮助，该加注释的部分都加了注释。</p>
-<p>　　　插入排序部分：</p>
-<p>　　　给出了两种实现方式，原理都一样，只不过第一种更巧妙，第二种更直观。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br></pre></td><td class="code"><pre><span class="line">/**</span><br><span class="line"> * 插入排序手动实现</span><br><span class="line"> * @author jrhu05</span><br><span class="line"> *</span><br><span class="line"> */</span><br><span class="line">public class InsertionSort &#123;</span><br><span class="line">	public static void main(String[] args) &#123;</span><br><span class="line">			int[] a=&#123;8,2,4,9,3,6&#125;;</span><br><span class="line">			insertSort2(a);</span><br><span class="line">			for (int i = 0; i &lt; a.length; i++) &#123;</span><br><span class="line">				System.out.print(a[i]);</span><br><span class="line">			&#125;</span><br><span class="line"></span><br><span class="line">	&#125;</span><br><span class="line">	public static void insertSort(int[] a) &#123;</span><br><span class="line">		int length=a.length;</span><br><span class="line">		for(int i=1;i&lt;length;i++)&#123;</span><br><span class="line">			int key=a[i];</span><br><span class="line">			int j=i-1;</span><br><span class="line">			while (j&gt;=0&amp;&amp;a[j]&gt;=key) &#123;</span><br><span class="line">				a[j+1]=a[j];</span><br><span class="line">				j--;</span><br><span class="line">			&#125;</span><br><span class="line">			a[j+1]=key;//上一步j自减了1，所以要给a[j+1]赋值</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	public static void insertSort2(int[] a) &#123;</span><br><span class="line">		int length=a.length;</span><br><span class="line">		int j,t;</span><br><span class="line">		for(int i=1;i&lt;length;i++)&#123;</span><br><span class="line">			int key=a[i];</span><br><span class="line">			int max=i-1;</span><br><span class="line">			for (j = 0; j &lt; max; j++) &#123;</span><br><span class="line">				if(a[j]&gt;=key)&#123;</span><br><span class="line">					break;</span><br><span class="line">				&#125;</span><br><span class="line">			&#125;</span><br><span class="line">			for(t=i;t&gt;j;t--)&#123;</span><br><span class="line">				a[t]=a[t-1];</span><br><span class="line">			&#125;</span><br><span class="line">			a[j]=key;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<p>　　　合并排序部分：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br></pre></td><td class="code"><pre><span class="line">/**</span><br><span class="line"> * 合并排序的手动实现</span><br><span class="line"> * @author jrhu05</span><br><span class="line"> *</span><br><span class="line"> */</span><br><span class="line">public class MergeSort &#123;</span><br><span class="line">	public static void main(String[] args) &#123;</span><br><span class="line">		int[] a=&#123;8,2,4,9,3,6&#125;;</span><br><span class="line">		mergeSort(a);</span><br><span class="line">		for (int i = 0; i &lt; a.length; i++) &#123;</span><br><span class="line">			System.out.print(a[i]);</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	private static int[] mergeSort(int[] array) &#123;</span><br><span class="line">		//如果数组长度大于1，则需要继续分解数组</span><br><span class="line">		if (array.length&gt;1) &#123;</span><br><span class="line">			int leftLength=array.length/2;</span><br><span class="line">			int rightLength=array.length-leftLength;</span><br><span class="line">			//创建两个新的数组</span><br><span class="line">			int[] left=new int[leftLength];</span><br><span class="line">			int[] right=new int[rightLength];</span><br><span class="line">			//将原数组中的值分别赋值到2个子数组中</span><br><span class="line">			for (int i = 0; i &lt; left.length; i++) &#123;</span><br><span class="line">				left[i]=array[i];</span><br><span class="line">			&#125;</span><br><span class="line">			for (int i = 0; i &lt; right.length; i++) &#123;</span><br><span class="line">				 right[i]=array[leftLength+i];</span><br><span class="line">			&#125;</span><br><span class="line">			//递归利用合并排序，排序子数组</span><br><span class="line">			left=mergeSort(left);</span><br><span class="line">			right=mergeSort(right);</span><br><span class="line">			//设置初始索引，就像ppt里的那两个箭头类似</span><br><span class="line">			int i=0;</span><br><span class="line">			int j=0;</span><br><span class="line">			for (int k = 0; k &lt; array.length; k++) &#123;</span><br><span class="line">				//如果左边数据索引达到边界则取右边的值（防止越界）</span><br><span class="line">				//此时左边的数据全部已经取完了，只能从右边取了</span><br><span class="line">				if (i==leftLength&amp;&amp;j&lt;rightLength) &#123;</span><br><span class="line">					array[k]=right[j];</span><br><span class="line">					j++;//取到哪边的值之后就向后移一位</span><br><span class="line">				&#125;else if (i&lt;leftLength&amp;&amp;j==rightLength) &#123;</span><br><span class="line">					//右边同理</span><br><span class="line">					array[k]=left[i];</span><br><span class="line">					i++;</span><br><span class="line">				&#125;else if (i&lt;leftLength&amp;&amp;j&lt;rightLength) &#123;</span><br><span class="line">					//如果两边均为到达边界则取较小的值</span><br><span class="line">					if (left[i]&gt;right[j]) &#123;</span><br><span class="line">						array[k]=right[j];</span><br><span class="line">						j++;</span><br><span class="line">					&#125;else &#123;</span><br><span class="line">						array[k]=left[i];</span><br><span class="line">						i++;</span><br><span class="line">					&#125;</span><br><span class="line">				&#125;</span><br><span class="line">				</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;</span><br><span class="line">		return array;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<p>　　　下次课要学习递归与分治，一点点来吧。日积月累，算法寻径。</p>
+		<h1 id="leetCode刷题笔记"><a href="#leetCode刷题笔记" class="headerlink" title="leetCode刷题笔记"></a>leetCode刷题笔记</h1><p>　　本文记录了leetCode刷题过程中的心得体会，每道题目均是以题目、分析、解答的模式给出，题目中复述了该题，分析中针对题目给出了简要的解题思路分析，解答中给出了能够通过的java语言实现的解答。</p>
+<p>　　有事没事就刷上这么一两道，龟速更新中，努力提高自己的算法水平。这个笔记一方面给自己提供一个整理，方便后续的复习查阅，另一方面如果能给各位带来一些帮助那就再好不过了。</p>
+<p>　　我刷题的顺序是计划先刷完前100道，先简单，后中级，最后hard，目前已经刷到了中级一半。此外有参考的部分均已注明出处。</p>
+<p><a href="https://github.com/jrhu05/leetCode/blob/master/problems/LeetCode-001TwoSum.md" target="_blank" rel="noopener"><strong>LeetCode-001TwoSum</strong></a></p>
+<p><a href="https://github.com/jrhu05/leetCode/blob/master/problems/LeetCode-002AddTwoNumbers.md" target="_blank" rel="noopener"><strong>LeetCode-002AddTwoNumbers</strong></a></p>
+<p><a href="https://github.com/jrhu05/leetCode/blob/master/problems/LeetCode-003LongestSubstringWithoutRepeatingCharacters.md" target="_blank" rel="noopener"><strong>LeetCode-003LongestSubstringWithoutRepeatingCharacters</strong></a></p>
+<p><a href="https://github.com/jrhu05/leetCode/blob/master/problems/LeetCode-004LongestPalindromicSubstring.md" target="_blank" rel="noopener"><strong>LeetCode-004LongestPalindromicSubstring</strong></a></p>
+<p><a href="https://github.com/jrhu05/leetCode/blob/master/problems/LeetCode-006ZigzagConversion.md" target="_blank" rel="noopener"><strong>LeetCode-006ZigzagConversion</strong></a></p>
+<p><a href="https://github.com/jrhu05/leetCode/blob/master/problems/LeetCode-007ReverseInteger.md" target="_blank" rel="noopener"><strong>LeetCode-007ReverseInteger</strong></a></p>
+<p><a href="https://github.com/jrhu05/leetCode/blob/master/problems/LeetCode-008StringToIntegerAtoi.md" target="_blank" rel="noopener"><strong>LeetCode-008StringToIntegerAtoi</strong></a></p>
+<p><a href="https://github.com/jrhu05/leetCode/blob/master/problems/LeetCode-009PalindromeNumber.md" target="_blank" rel="noopener"><strong>LeetCode-009PalindromeNumber</strong></a></p>
+<p><a href="https://github.com/jrhu05/leetCode/blob/master/problems/LeetCode-011ContainerWithMostWater.md" target="_blank" rel="noopener"><strong>LeetCode-011ContainerWithMostWater</strong></a></p>
+<p><a href="https://github.com/jrhu05/leetCode/blob/master/problems/LeetCode-012IntegerToRoman.md" target="_blank" rel="noopener"><strong>LeetCode-012IntegerToRoman</strong></a></p>
+<p><a href="https://github.com/jrhu05/leetCode/blob/master/problems/LeetCode-013RomanToInteger.md" target="_blank" rel="noopener"><strong>LeetCode-013RomanToInteger</strong></a></p>
+<p><a href="https://github.com/jrhu05/leetCode/blob/master/problems/LeetCode-014LongestCommonPrefix.md" target="_blank" rel="noopener"><strong>LeetCode-014LongestCommonPrefix</strong></a></p>
+<p><a href="https://github.com/jrhu05/leetCode/blob/master/problems/LeetCode-015ThreeSum.md" target="_blank" rel="noopener"><strong>LeetCode-015ThreeSum</strong></a></p>
+<p><a href="https://github.com/jrhu05/leetCode/blob/master/problems/LeetCode-016ThreeSumClosest.md" target="_blank" rel="noopener"><strong>LeetCode-016ThreeSumClosest</strong></a></p>
+<p><a href="https://github.com/jrhu05/leetCode/blob/master/problems/LeetCode-017LetterCombinationsOfAPhoneNumber.md" target="_blank" rel="noopener"><strong>LeetCode-017LetterCombinationsOfAPhoneNumber</strong></a></p>
+<p><a href="https://github.com/jrhu05/leetCode/blob/master/problems/LeetCode-018fourSum.md" target="_blank" rel="noopener"><strong>LeetCode-018fourSum</strong></a></p>
+<p><a href="https://github.com/jrhu05/leetCode/blob/master/problems/LeetCode-019RemoveNthNodeFromEndOfList.md" target="_blank" rel="noopener"><strong>LeetCode-019RemoveNthNodeFromEndOfList</strong></a></p>
+<p><a href="https://github.com/jrhu05/leetCode/blob/master/problems/LeetCode-020ValidParentheses.md" target="_blank" rel="noopener"><strong>LeetCode-020ValidParentheses</strong></a></p>
+<p><a href="https://github.com/jrhu05/leetCode/blob/master/problems/LeetCode-021MergeTwoSortedLists.md" target="_blank" rel="noopener"><strong>LeetCode-021MergeTwoSortedLists</strong></a></p>
+<p><a href="https://github.com/jrhu05/leetCode/blob/master/problems/LeetCode-022GenerateParentheses.md" target="_blank" rel="noopener"><strong>LeetCode-022GenerateParentheses</strong></a></p>
+<p><a href="https://github.com/jrhu05/leetCode/blob/master/problems/LeetCode-024SwapNodesInPairs.md" target="_blank" rel="noopener"><strong>LeetCode-024SwapNodesInPairs</strong></a></p>
+<p><a href="https://github.com/jrhu05/leetCode/blob/master/problems/LeetCode-026RemoveDuplicatesFromSortedArray.md" target="_blank" rel="noopener"><strong>LeetCode-026RemoveDuplicatesFromSortedArray</strong></a></p>
+<p><a href="https://github.com/jrhu05/leetCode/blob/master/problems/LeetCode-027RemoveElement.md" target="_blank" rel="noopener"><strong>LeetCode-027RemoveElement</strong></a></p>
+<p><a href="https://github.com/jrhu05/leetCode/blob/master/problems/LeetCode-028ImplementStrstr.md" target="_blank" rel="noopener"><strong>LeetCode-028ImplementStrstr</strong></a></p>
+<p><a href="https://github.com/jrhu05/leetCode/blob/master/problems/LeetCode-029DivideTwoIntegers.md" target="_blank" rel="noopener"><strong>LeetCode-029DivideTwoIntegers</strong></a></p>
+<p><a href="https://github.com/jrhu05/leetCode/blob/master/problems/LeetCode-031NextPermutation.md" target="_blank" rel="noopener"><strong>LeetCode-031NextPermutation</strong></a></p>
+<p><a href="https://github.com/jrhu05/leetCode/blob/master/problems/LeetCode-033SearchInRotatedSortedArray.md" target="_blank" rel="noopener"><strong>LeetCode-033SearchInRotatedSortedArray</strong></a></p>
+<p><a href="https://github.com/jrhu05/leetCode/blob/master/problems/LeetCode-034FindFirstAndLastPositionOfElementInSortedArray.md" target="_blank" rel="noopener"><strong>LeetCode-034FindFirstAndLastPositionOfElementInSortedArray</strong></a></p>
+<p><a href="https://github.com/jrhu05/leetCode/blob/master/problems/LeetCode-035SearchInsertPosition.md" target="_blank" rel="noopener"><strong>LeetCode-035SearchInsertPosition</strong></a></p>
+<p><a href="https://github.com/jrhu05/leetCode/blob/master/problems/LeetCode-036ValidSudoku.md" target="_blank" rel="noopener"><strong>LeetCode-036ValidSudoku</strong></a></p>
+<p><a href="https://github.com/jrhu05/leetCode/blob/master/problems/LeetCode-038CountAndSay.md" target="_blank" rel="noopener"><strong>LeetCode-038CountAndSay</strong></a></p>
+<p><a href="https://github.com/jrhu05/leetCode/blob/master/problems/LeetCode-039CombinationSum.md" target="_blank" rel="noopener"><strong>LeetCode-039CombinationSum</strong></a></p>
+<p><a href="https://github.com/jrhu05/leetCode/blob/master/problems/LeetCode-053MaximumSubarray.md" target="_blank" rel="noopener"><strong>LeetCode-053MaximumSubarray</strong></a></p>
+<p><a href="https://github.com/jrhu05/leetCode/blob/master/problems/LeetCode-058Length0fLastWord.md" target="_blank" rel="noopener"><strong>LeetCode-058Length0fLastWord</strong></a></p>
+<p><a href="https://github.com/jrhu05/leetCode/blob/master/problems/LeetCode-066PlusOne.md" target="_blank" rel="noopener"><strong>LeetCode-066PlusOne</strong></a></p>
+<p><a href="https://github.com/jrhu05/leetCode/blob/master/problems/LeetCode-067AddBinary.md" target="_blank" rel="noopener"><strong>LeetCode-067AddBinary</strong></a></p>
+<p><a href="https://github.com/jrhu05/leetCode/blob/master/problems/LeetCode-069Sqrtx.md" target="_blank" rel="noopener"><strong>LeetCode-069Sqrtx</strong></a></p>
+<p><a href="https://github.com/jrhu05/leetCode/blob/master/problems/LeetCode-070ClimbingStairs.md" target="_blank" rel="noopener"><strong>LeetCode-070ClimbingStairs</strong></a></p>
+<p><a href="https://github.com/jrhu05/leetCode/blob/master/problems/LeetCode-083RemoveDuplicatesFromSortedList.md" target="_blank" rel="noopener"><strong>LeetCode-083RemoveDuplicatesFromSortedList</strong></a></p>
+<p><a href="https://github.com/jrhu05/leetCode/blob/master/problems/LeetCode-088MergeSortedArray.md" target="_blank" rel="noopener"><strong>LeetCode-088MergeSortedArray</strong></a></p>
+<p><a href="https://github.com/jrhu05/leetCode/blob/master/problems/LeetCode-100SameTree.md" target="_blank" rel="noopener"><strong>LeetCode-100SameTree</strong></a></p>
+<p><a href="https://github.com/jrhu05/leetCode/blob/master/problems/LeetCode-461HammingDistance.md" target="_blank" rel="noopener"><strong>LeetCode-461HammingDistance</strong></a></p>
+<p><a href="https://github.com/jrhu05/leetCode/blob/master/problems/LeetCode-657JudgeRouteCircle.md" target="_blank" rel="noopener"><strong>LeetCode-657JudgeRouteCircle</strong></a></p>
+<p><a href="https://github.com/jrhu05/leetCode/blob/master/problems/LeetCode-771JewelsAndStones.md" target="_blank" rel="noopener"><strong>LeetCode-771JewelsAndStones</strong></a></p>
   
 	</div>
 		<footer class="article-footer clearfix">
 
   <div class="article-tags">
   
-  <span></span> <a href="/tags/插入排序/">插入排序</a><a href="/tags/归并排序/">归并排序</a>
+  <span></span> <a href="/tags/leetCode/">leetCode</a>
   </div>
 
 
@@ -151,19 +192,11 @@
 	
 <nav class="article-nav clearfix">
  
- <div class="prev" >
- <a href="/post/divideAndConquer-part1.html" title="分治与递归">
-  <strong>PREVIOUS:</strong><br/>
-  <span>
-  分治与递归</span>
-</a>
-</div>
-
 
 <div class="next">
-<a href="/post/huawei-2015.html"  title="华为2015实习生校招机试题">
+<a href="/post/primary-school.html"  title="小学">
  <strong>NEXT:</strong><br/> 
- <span>华为2015实习生校招机试题
+ <span>小学
 </span>
 </a>
 </div>
@@ -177,7 +210,7 @@
 	<script src="https://imsun.github.io/gitment/dist/gitment.browser.js"></script>
 	<script>
 	  var gitment = new Gitment({
-	    id: 'lThu Apr 16 2015 09:56:31 GMT+0800', // 可选。建议为Thu Apr 16 2015 09:56:31 GMT+0800
+	    id: 'lSun Oct 14 2018 20:43:06 GMT+0800', // 可选。建议为Sun Oct 14 2018 20:43:06 GMT+0800
 	    owner: 'jrhu05', // 可以是你的GitHub用户名，也可以是github id
 	    repo: 'jrhu05.github.io',
 	    oauth: {
@@ -194,7 +227,7 @@
 
   <div id="toc" class="toc-aside">
   <strong class="toc-title">文章目录</strong>
-  
+  <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#leetCode刷题笔记"><span class="toc-number">1.</span> <span class="toc-text">leetCode刷题笔记</span></a></li></ol>
   </div>
 
 <div id="asidepart">
